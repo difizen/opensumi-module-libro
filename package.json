@@ -67,7 +67,6 @@
     "@opensumi/ide-scm": "2.26.8",
     "@opensumi/ide-search": "2.26.8",
     "@opensumi/ide-static-resource": "2.26.8",
-    "antd": "4",
     "postcss": "^8.4.21",
     "request": "^2.88.2"
   },
@@ -80,6 +79,7 @@
     "@babel/runtime": "^7.24.1",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
+    "@difizen/libro-jupyter": "^0.1.24",
     "@difizen/mana-app": "^0.1.12",
     "@opensumi/ide-addons": "2.26.8",
     "@opensumi/ide-comments": "2.26.8",
