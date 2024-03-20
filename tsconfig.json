@@ -30,5 +30,12 @@
     "jsx": "react",
     "lib": ["dom", "esnext", "webworker"]
   },
-  "include": [".dumirc.ts", "src/**/*", "./typings/**/*", "example/**/*"]
+  "include": [
+    ".dumirc.ts",
+    "src/**/*",
+    "./typings/**/*",
+    "example/**/*",
+    "modules/**/*",
+    "docs/**/*"
+  ]
 }

@@ -1,9 +1,9 @@
 import { Deferred } from '@opensumi/ide-core-common';
 import { IServerAppOpts, NodeModule, ServerApp } from '@opensumi/ide-core-node';
-import * as http from 'http';
-import * as Koa from 'koa';
-import * as koaStatic from 'koa-static';
-import * as path from 'path';
+import http from 'http';
+import Koa from 'koa';
+import koaStatic from 'koa-static';
+import path from 'path';
 
 export async function startServer(
   arg1: NodeModule[] | Partial<IServerAppOpts>,
