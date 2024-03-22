@@ -45,7 +45,7 @@ module.exports = {
     type: 'filesystem',
   },
   experiments: {
-    asyncWebAssembly: true
+    asyncWebAssembly: true,
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.mjs', '.json', '.less'],
@@ -62,8 +62,16 @@ module.exports = {
       child_process: false,
       url: false,
       fs: false,
-      stream: require.resolve("stream-browserify")
+      stream: false,
+      wasi_snapshot_preview1: false,
+      env: false,
+      querystring: false,
+      http: false,
+      https: false,
+      zlib: false,
+      tls: false,
     },
+    fullySpecified: false,
   },
   mode: process.env['NODE_ENV'],
   devtool: isDevelopment ? 'source-map' : false,
