@@ -44,6 +44,9 @@ module.exports = {
   cache: {
     type: 'filesystem',
   },
+  experiments: {
+    asyncWebAssembly: true
+  },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.mjs', '.json', '.less'],
     plugins: [
@@ -59,6 +62,7 @@ module.exports = {
       child_process: false,
       url: false,
       fs: false,
+      stream: require.resolve("stream-browserify")
     },
   },
   mode: process.env['NODE_ENV'],

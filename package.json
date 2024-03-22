@@ -176,7 +176,8 @@
     "webpack-bundle-analyzer": "^4.10.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4",
-    "yauzl": "^2.10.0"
+    "yauzl": "^2.10.0",
+    "stream-browserify": "^3.0.0"
   },
   "peerDependencies": {
     "react": "^16.8.0",

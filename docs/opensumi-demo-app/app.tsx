@@ -27,6 +27,7 @@ import { CustomEditorEmptyComponentModule } from 'modules/editor-empty-component
 import { CustomViewModule } from 'modules/custom-view/browser';
 import { CustomMonacoEditorServicesSampleModule } from 'modules/editor-monaco-component/browser';
 import React, { useEffect } from 'react';
+import { ManaApplication } from './mana-application';
 
 export const startApp = () =>
   renderApp({
@@ -71,7 +72,7 @@ export const startApp = () =>
     },
     // layoutComponent: DefaultLayout,
     // 引入 custom-toolbar 自定义视图时，需要自定义布局组件，可以基于 DefaultLayout 进行拓展
-    layoutComponent: CustomToolbarLayout,
+    layoutComponent: ManaApplication,
   });
 
 export const IDEApp: React.FC = () => {
