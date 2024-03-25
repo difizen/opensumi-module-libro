@@ -44,6 +44,9 @@ module.exports = {
   cache: {
     type: 'filesystem',
   },
+  experiments: {
+    asyncWebAssembly: true,
+  },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.mjs', '.json', '.less'],
     plugins: [
@@ -59,7 +62,16 @@ module.exports = {
       child_process: false,
       url: false,
       fs: false,
+      stream: false,
+      wasi_snapshot_preview1: false,
+      env: false,
+      querystring: false,
+      http: false,
+      https: false,
+      zlib: false,
+      tls: false,
     },
+    fullySpecified: false,
   },
   mode: process.env['NODE_ENV'],
   devtool: isDevelopment ? 'source-map' : false,

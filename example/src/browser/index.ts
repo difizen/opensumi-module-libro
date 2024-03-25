@@ -21,11 +21,11 @@ import '@opensumi/ide-core-browser/lib/style/index.less';
 import { BuitinServicesSampleModule } from 'modules/builtin-services/browser';
 import { CustomContextMenuModule } from 'modules/custom-context-menu/browser';
 import { CustomToolbarModule } from 'modules/custom-toolbar/browser';
-import { CustomToolbarLayout } from 'modules/custom-toolbar/browser/custom-layout';
 import { CustomEditorEmptyComponentModule } from 'modules/editor-empty-component/browser';
 // import { DefaultLayout } from '@opensumi/ide-core-browser/lib/components';
 import { CustomViewModule } from 'modules/custom-view/browser';
 import { CustomMonacoEditorServicesSampleModule } from 'modules/editor-monaco-component/browser';
+import { CustomToolbarLayout } from './mana-application';
 
 renderApp({
   modules: [

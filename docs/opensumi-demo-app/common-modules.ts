@@ -1,3 +1,4 @@
+import { OpensumiLibroModule } from '@difizen/opensumi-module-libro/browser';
 import { ClientAddonModule } from '@opensumi/ide-addons/lib/browser';
 import { CommentsModule } from '@opensumi/ide-comments/lib/browser';
 import {
@@ -90,4 +91,5 @@ export const CommonBrowserModules: ConstructorOf<BrowserModule>[] = [
   ExpressFileServerModule,
   BuitinEventsSampleModule,
   CustomEditorResourceModule,
+  OpensumiLibroModule
 ];

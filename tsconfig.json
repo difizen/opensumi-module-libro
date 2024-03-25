@@ -27,7 +27,7 @@
     "noImplicitAny": false,
     "skipLibCheck": true,
     "strictFunctionTypes": false,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "lib": ["dom", "esnext", "webworker"]
   },
   "include": [
