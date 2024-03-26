@@ -67,7 +67,6 @@ renderApp({
     bottom: '@opensumi/ide-terminal-next',
     right: '',
   },
-  // layoutComponent: DefaultLayout,
   // 引入 custom-toolbar 自定义视图时，需要自定义布局组件，可以基于 DefaultLayout 进行拓展
   layoutComponent: CustomToolbarLayout,
 });

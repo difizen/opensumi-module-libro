@@ -4,6 +4,9 @@ import * as React from 'react';
 import { BoxPanel, getStorageValue, SplitPanel } from '@opensumi/ide-core-browser/lib/components';
 import { SlotRenderer } from '@opensumi/ide-core-browser';
 import { LibroJupyterModule } from '@difizen/libro-jupyter';
+// import { LibroOpensumiModule } from '@difizen/opensumi-module-libro/browser/mana-module';
+import { LibroModule } from '@difizen/libro-core';
+
 
 export function CustomToolbarLayout() {
     const { colors, layout } = getStorageValue();
@@ -12,7 +15,7 @@ export function CustomToolbarLayout() {
         <ManaComponents.Application
           context = {{container:GlobalContainer}}
           modules={[
-            ManaAppPreset,LibroJupyterModule
+            ManaAppPreset,LibroModule
           ]}
           renderChildren
         />

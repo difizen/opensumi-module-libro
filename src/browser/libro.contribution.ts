@@ -16,6 +16,8 @@ import {
 import { IWorkspaceService } from '@opensumi/ide-workspace/lib/common';
 import { IconService } from '@opensumi/ide-theme/lib/browser';
 import { OpensumiLibroView } from './libro.view';
+import { GlobalContainer } from '@difizen/mana-app';
+import { LibroService, LibroView } from '@difizen/libro-core';
 
 const LIBRO_COMPONENTS_VIEW_COMMAND = {
   id: 'opensumi-libro',
@@ -25,6 +27,8 @@ const LIBRO_COMPONENTS_ID = 'opensumi:libro';
 const LIBRO_COMPONENTS_SCHEME_ID = 'ipynb';
 
 @Domain(BrowserEditorContribution, ClientAppContribution, CommandContribution)
+// export class LibroContribution implements ClientAppContribution, CommandContribution {
+
 export class LibroContribution implements ClientAppContribution, BrowserEditorContribution, CommandContribution {
   @Autowired(IWorkspaceService)
   protected readonly workspaceService: IWorkspaceService;
@@ -67,6 +71,8 @@ export class LibroContribution implements ClientAppContribution, BrowserEditorCo
   }
 
   async onDidStart() {
+    // console.log('constructor LibroOpensumiService',GlobalContainer,LibroView)
+    // this.libroService = GlobalContainer.get(LibroService)
     this.editorService.open(new URI(`${LIBRO_COMPONENTS_SCHEME_ID}://`), { preview: false });
   }
 }
