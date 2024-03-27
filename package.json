@@ -9,7 +9,7 @@
     "dist"
   ],
   "scripts": {
-    "dev": "cross-env PORT=9000 dumi dev",
+    "dev": "cross-env NODE_OPTIONS=--max-old-space-size=8192 PORT=9000 dumi dev",
     "build": "father build",
     "build:watch": "father dev",
     "docs:build": "dumi build",

@@ -5,7 +5,7 @@
 ```jsx
 import React from 'react';
 import { useEffect } from 'react';
-import { startApp } from './app';
+import { startApp } from '../../example/src/browser';
 
 export default () => {
   useEffect(() => {
