@@ -27,47 +27,47 @@ import { CustomViewModule } from 'modules/custom-view/browser';
 import { CustomMonacoEditorServicesSampleModule } from 'modules/editor-monaco-component/browser';
 import { CustomToolbarLayout } from './mana-application';
 
-renderApp({
-  modules: [
-    ...CommonBrowserModules,
-    TodoListModule,
-    TerminalEnvModule,
-    TerminalBasicUsageModule,
-    ComponentsSampleModule,
-    AntdComponentsSampleModule,
-    EditorTitleSampleModule,
-    WelcomeContentSampleModule,
-    TogglePanelSampleModule,
-    CustomToolbarModule,
-    BuitinServicesSampleModule,
-    CustomEditorEmptyComponentModule,
-    CustomMonacoEditorServicesSampleModule,
-    CustomViewModule,
-    CustomContextMenuModule,
-  ],
-  layoutConfig: {
-    ...defaultConfig,
-    ...{
-      [SlotLocation.top]: {
-        modules: ['@opensumi/ide-menu-bar', 'test-toolbar'],
+export const startApp = () =>
+  renderApp({
+    modules: [
+      ...CommonBrowserModules,
+      TodoListModule,
+      TerminalEnvModule,
+      TerminalBasicUsageModule,
+      ComponentsSampleModule,
+      AntdComponentsSampleModule,
+      EditorTitleSampleModule,
+      WelcomeContentSampleModule,
+      TogglePanelSampleModule,
+      CustomToolbarModule,
+      BuitinServicesSampleModule,
+      CustomEditorEmptyComponentModule,
+      CustomMonacoEditorServicesSampleModule,
+      CustomViewModule,
+      CustomContextMenuModule,
+    ],
+    layoutConfig: {
+      ...defaultConfig,
+      ...{
+        [SlotLocation.top]: {
+          modules: ['@opensumi/ide-menu-bar', 'test-toolbar'],
+        },
+      },
+      customAction: {
+        modules: ['test-toolbar'],
       },
     },
-    customAction: {
-      modules: ['test-toolbar'],
+    useCdnIcon: false,
+    useExperimentalShadowDom: false,
+    defaultPreferences: {
+      'general.theme': 'opensumi-dark',
+      'general.icon': 'vscode-icons',
+      'menubar.compactMode': true,
     },
-  },
-  useCdnIcon: false,
-  useExperimentalShadowDom: false,
-  defaultPreferences: {
-    'general.theme': 'opensumi-dark',
-    'general.icon': 'vscode-icons',
-    'menubar.compactMode': true,
-  },
-  defaultPanels: {
-    bottom: '@opensumi/ide-terminal-next',
-    right: '',
-  },
-  // layoutComponent: DefaultLayout,
-  // 引入 custom-toolbar 自定义视图时，需要自定义布局组件，可以基于 DefaultLayout 进行拓展
-  layoutComponent: CustomToolbarLayout,
-});
+    defaultPanels: {
+      bottom: '@opensumi/ide-terminal-next',
+      right: '',
+    },
+    // 引入 custom-toolbar 自定义视图时，需要自定义布局组件，可以基于 DefaultLayout 进行拓展
+    layoutComponent: CustomToolbarLayout,
+  });

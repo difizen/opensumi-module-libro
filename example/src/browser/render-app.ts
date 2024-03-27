@@ -7,16 +7,15 @@ import { StatusBarContribution } from './status-bar/status-bar.contribution';
 process.env.KTLOG_SHOW_DEBUG = 'true';
 
 export async function renderApp(opts: IClientAppOpts) {
+  const isDev = process.env.DEVELOPMENT ?? true; //TODO
   const injector = new Injector();
   injector.addProviders(StatusBarContribution);
 
   const hostname = window.location.hostname;
   const query = new URLSearchParams(window.location.search);
   // 线上的静态服务和 IDE 后端是一个 Server
-  const serverPort = process.env.DEVELOPMENT ? 8000 : window.location.port;
-  const staticServerPort = process.env.DEVELOPMENT
-    ? 8080
-    : window.location.port;
+  const serverPort = isDev ? 8000 : window.location.port;
+  const staticServerPort = isDev ? 8080 : window.location.port;
   opts.workspaceDir =
     opts.workspaceDir || query.get('workspaceDir') || process.env.WORKSPACE_DIR;
 
