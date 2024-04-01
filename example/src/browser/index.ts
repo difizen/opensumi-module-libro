@@ -3,7 +3,6 @@ import { defaultConfig } from '@opensumi/ide-main-layout/lib/browser/default-con
 import { CommonBrowserModules } from './common-modules';
 import { renderApp } from './render-app';
 
-import { SlotLocation } from '@opensumi/ide-core-browser';
 import { WelcomeContentSampleModule } from 'modules/add-welcome-content/browser';
 import { ComponentsSampleModule } from 'modules/components/browser';
 import { TodoListModule } from 'modules/connection/browser';
@@ -48,14 +47,14 @@ export const startApp = () =>
     ],
     layoutConfig: {
       ...defaultConfig,
-      ...{
-        [SlotLocation.top]: {
-          modules: ['@opensumi/ide-menu-bar', 'test-toolbar'],
-        },
-      },
-      customAction: {
-        modules: ['test-toolbar'],
-      },
+      // ...{
+      //   [SlotLocation.top]: {
+      //     modules: ['@opensumi/ide-menu-bar', 'test-toolbar'],
+      //   },
+      // },
+      // customAction: {
+      //   modules: ['test-toolbar'],
+      // },
     },
     useCdnIcon: false,
     useExperimentalShadowDom: false,

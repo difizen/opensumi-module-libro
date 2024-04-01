@@ -12,12 +12,13 @@ export async function renderApp(opts: IClientAppOpts) {
   injector.addProviders(StatusBarContribution);
 
   const hostname = window.location.hostname;
-  const query = new URLSearchParams(window.location.search);
+  // const query = new URLSearchParams(window.location.search);
   // 线上的静态服务和 IDE 后端是一个 Server
   const serverPort = isDev ? 8000 : window.location.port;
   const staticServerPort = isDev ? 8080 : window.location.port;
   opts.workspaceDir =
-    opts.workspaceDir || query.get('workspaceDir') || process.env.WORKSPACE_DIR;
+    '/Users/ximo.lk/Public/code/opensource/opensumi-module-libro/example';
+  // opts.workspaceDir || query.get('workspaceDir') || process.env.WORKSPACE_DIR;
 
   opts.extensionDir = opts.extensionDir || process.env.EXTENSION_DIR;
   opts.injector = injector;

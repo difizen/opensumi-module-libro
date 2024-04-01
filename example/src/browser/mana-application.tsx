@@ -12,17 +12,16 @@ import {
   SplitPanel,
 } from '@opensumi/ide-core-browser/lib/components';
 // import { LibroOpensumiModule } from '@difizen/opensumi-module-libro/browser/mana-module';
-import { LibroModule } from '@difizen/libro-core';
+// import { LibroModule } from '@difizen/libro-core';
+import { LibroOpensumiModule } from '@difizen/opensumi-module-libro/browser/mana-module';
 
 export function CustomToolbarLayout() {
-  console.log('LibroJupyterModule', LibroJupyterModule);
-
   const { colors, layout } = getStorageValue();
   return (
     <BoxPanel direction="top-to-bottom">
       <ManaComponents.Application
         context={{ container: GlobalContainer }}
-        modules={[ManaAppPreset, LibroModule]}
+        modules={[ManaAppPreset, LibroJupyterModule, LibroOpensumiModule]}
         renderChildren
       />
       <SlotRenderer
