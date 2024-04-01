@@ -1,6 +1,6 @@
-import { Injector } from '@opensumi/di';
 import { IClientAppOpts } from '@opensumi/ide-core-browser';
 import { ClientApp } from '@opensumi/ide-core-browser/lib/bootstrap/app';
+import { injector } from './injector';
 import { StatusBarContribution } from './status-bar/status-bar.contribution';
 
 // Enable OpenSumi debug logger
@@ -8,7 +8,6 @@ process.env.KTLOG_SHOW_DEBUG = 'true';
 
 export async function renderApp(opts: IClientAppOpts) {
   const isDev = process.env.DEVELOPMENT ?? true; //TODO
-  const injector = new Injector();
   injector.addProviders(StatusBarContribution);
 
   const hostname = window.location.hostname;

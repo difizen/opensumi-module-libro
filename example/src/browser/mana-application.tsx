@@ -11,9 +11,9 @@ import {
   getStorageValue,
   SplitPanel,
 } from '@opensumi/ide-core-browser/lib/components';
+import { LibroOpensumiModule } from './mana/mana-module';
 // import { LibroOpensumiModule } from '@difizen/opensumi-module-libro/browser/mana-module';
 // import { LibroModule } from '@difizen/libro-core';
-import { LibroOpensumiModule } from '@difizen/opensumi-module-libro/browser/mana-module';
 
 export function CustomToolbarLayout() {
   const { colors, layout } = getStorageValue();
