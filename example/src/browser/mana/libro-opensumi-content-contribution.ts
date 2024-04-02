@@ -42,6 +42,9 @@ export class LibroOpensumiContentContribution implements ContentContribution {
       model.currentFileContents = currentFileContents;
       model.filePath = currentFileContents.path;
       model.lastModified = model.currentFileContents.last_modified;
+      if (!model.quickEditMode && !model.readOnly) {
+        model.startKernelConnection();
+      }
     } catch (e) {
       message.error('File Read Error');
       notebookContent = {
