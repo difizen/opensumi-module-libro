@@ -1,3 +1,4 @@
+import { ServerConnection, ServerManager } from '@difizen/libro-jupyter';
 import {
   ApplicationContribution,
   inject,
@@ -8,6 +9,8 @@ import {
 @singleton({ contrib: ApplicationContribution })
 export class LibroApp implements ApplicationContribution {
   protected readonly themeService: ThemeService;
+  @inject(ServerConnection) serverConnection: ServerConnection;
+  @inject(ServerManager) serverManager: ServerManager;
 
   constructor(
     @inject(ThemeService)
@@ -18,5 +21,10 @@ export class LibroApp implements ApplicationContribution {
 
   onStart = () => {
     this.themeService.setCurrentTheme('dark');
+    this.serverConnection.updateSettings({
+      baseUrl: 'http://localhost:8888/',
+      wsUrl: 'ws://localhost:8888/',
+    });
+    this.serverManager.launch();
   };
 }

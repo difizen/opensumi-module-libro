@@ -30,12 +30,6 @@ export function CustomToolbarLayout() {
         slot="top"
         z-index={2}
       />
-      {/* 追加 custom-action 插槽 */}
-      <SlotRenderer
-        color={colors.menuBarBackground}
-        defaultSize={35}
-        slot="customAction"
-      />
       <SplitPanel id="main-horizontal" flex={1}>
         <SlotRenderer
           backgroundColor={colors.sideBarBackground}
