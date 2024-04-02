@@ -20,6 +20,12 @@ export const OpensumiLibroView = (...params) => {
       .getOrCreatLibroView(params[0].resource.uri)
       .then((libro) => {
         setLibroView(libro);
+        libro.model.onChanged(() => {
+          libroOpensumiService.updateDirtyStatus(params[0].resource.uri, true);
+        });
+        libro.onSave(() => {
+          libroOpensumiService.updateDirtyStatus(params[0].resource.uri, false);
+        });
       });
   }, []);
   return (
