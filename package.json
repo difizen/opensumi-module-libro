@@ -2,15 +2,23 @@
   "name": "@difizen/opensumi-module-libro",
   "version": "0.0.1",
   "description": "libro on opensumi",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:opensumi/opensumi-module-samples.git"
+  },
   "license": "MIT",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
   "files": [
-    "dist"
+    "lib"
   ],
   "scripts": {
+    "prepublishOnly": "npm run build",
+    "build": "rm -rf lib && tsc -p ./tsconfig.json",
+    "postbuild": "npm run copy-files",
+    "copy-files": "copyfiles -u 1 src/**/**/*.less lib",
+    "release": "commit-and-tag-version --npmPublishHint='tnpm publish'",
     "dev": "cross-env NODE_OPTIONS=--max-old-space-size=8192 PORT=9000 dumi dev",
-    "build": "father build",
     "build:watch": "father dev",
     "docs:build": "dumi build",
     "prepare": "husky install && dumi setup && npm run prepare-opensumi",
@@ -18,7 +26,6 @@
     "lint": "npm run lint:es && npm run lint:css",
     "lint:css": "stylelint \"{src,test}/**/*.{css,less}\"",
     "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
-    "prepublishOnly": "father doctor && npm run build",
     "postinstall": "npm run prepare",
     "start:client": "cross-env NODE_ENV=development webpack-dev-server --config ./example/configs/webpack.browser.config.js --color --watch",
     "start:webview": "webpack-dev-server --config ./example/configs/webpack.webview.config.js",
@@ -130,6 +137,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "compression": "^1.7.4",
     "copy-webpack-plugin": "^12.0.2",
+    "copyfiles": "^2.4.1",
     "cross-env": "^7.0.3",
     "css-loader": "^6.10.0",
     "debug": "^4.3.3",
@@ -180,7 +188,7 @@
     "access": "public"
   },
   "authors": [
-    "c5e1856@gmail.com"
+    "1176136681@qq.com"
   ],
   "overrides": {
     "react": "18.2.0",
