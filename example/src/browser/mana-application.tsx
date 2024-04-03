@@ -11,18 +11,17 @@ import {
   getStorageValue,
   SplitPanel,
 } from '@opensumi/ide-core-browser/lib/components';
+import { DemoLibroModule } from './mana/demo-module';
 // import { LibroOpensumiModule } from '@difizen/opensumi-module-libro/browser/mana-module';
-import { LibroModule } from '@difizen/libro-core';
+// import { LibroModule } from '@difizen/libro-core';
 
 export function CustomToolbarLayout() {
-  console.log('LibroJupyterModule', LibroJupyterModule);
-
   const { colors, layout } = getStorageValue();
   return (
     <BoxPanel direction="top-to-bottom">
       <ManaComponents.Application
         context={{ container: GlobalContainer }}
-        modules={[ManaAppPreset, LibroModule]}
+        modules={[ManaAppPreset, LibroJupyterModule, DemoLibroModule]}
         renderChildren
       />
       <SlotRenderer
@@ -30,12 +29,6 @@ export function CustomToolbarLayout() {
         defaultSize={0}
         slot="top"
         z-index={2}
-      />
-      {/* 追加 custom-action 插槽 */}
-      <SlotRenderer
-        color={colors.menuBarBackground}
-        defaultSize={35}
-        slot="customAction"
       />
       <SplitPanel id="main-horizontal" flex={1}>
         <SlotRenderer

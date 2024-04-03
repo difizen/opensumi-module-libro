@@ -20,4 +20,5 @@ export default defineConfig({
     ['@babel/plugin-transform-private-property-in-object', { loose: true }],
     'babel-plugin-parameter-decorator',
   ],
+  mfsu: false,
 });

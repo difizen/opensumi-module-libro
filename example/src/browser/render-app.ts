@@ -1,6 +1,6 @@
-import { Injector } from '@opensumi/di';
 import { IClientAppOpts } from '@opensumi/ide-core-browser';
 import { ClientApp } from '@opensumi/ide-core-browser/lib/bootstrap/app';
+import { injector } from '../../../src/browser/injector';
 import { StatusBarContribution } from './status-bar/status-bar.contribution';
 
 // Enable OpenSumi debug logger
@@ -8,16 +8,16 @@ process.env.KTLOG_SHOW_DEBUG = 'true';
 
 export async function renderApp(opts: IClientAppOpts) {
   const isDev = process.env.DEVELOPMENT ?? true; //TODO
-  const injector = new Injector();
   injector.addProviders(StatusBarContribution);
 
   const hostname = window.location.hostname;
-  const query = new URLSearchParams(window.location.search);
+  // const query = new URLSearchParams(window.location.search);
   // 线上的静态服务和 IDE 后端是一个 Server
   const serverPort = isDev ? 8000 : window.location.port;
   const staticServerPort = isDev ? 8080 : window.location.port;
   opts.workspaceDir =
-    opts.workspaceDir || query.get('workspaceDir') || process.env.WORKSPACE_DIR;
+    '/Users/ximo.lk/Public/code/opensource/opensumi-module-libro/example';
+  // opts.workspaceDir || query.get('workspaceDir') || process.env.WORKSPACE_DIR;
 
   opts.extensionDir = opts.extensionDir || process.env.EXTENSION_DIR;
   opts.injector = injector;

@@ -1,8 +1,9 @@
-import { Provider, Injectable } from '@opensumi/di';
+import { Injectable, Provider } from '@opensumi/di';
 import { BrowserModule } from '@opensumi/ide-core-browser';
 import { LibroContribution } from './libro.contribution';
 import { ILibroOpensumiService, LibroOpensumiService } from './libro.service';
 
+export * from './injector';
 @Injectable()
 export class OpensumiLibroModule extends BrowserModule {
   providers: Provider[] = [
