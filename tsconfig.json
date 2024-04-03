@@ -1,15 +1,9 @@
 {
   "compilerOptions": {
-    "esModuleInterop": true,
-    "baseUrl": "./",
-    "paths": {
-      "@@/*": [".dumi/tmp/*"],
-      "@difizen/opensumi-module-libro": ["src"],
-      "@difizen/opensumi-module-libro/*": ["src/*", "*"]
-    },
+    "rootDir": "./src",
+    "outDir": "./lib",
     "module": "commonjs",
     "target": "es2017",
-    "outDir": "lib",
     "moduleResolution": "node",
     "strict": true,
     "strictPropertyInitialization": false,
@@ -27,15 +21,12 @@
     "noImplicitAny": false,
     "skipLibCheck": true,
     "strictFunctionTypes": false,
-    "jsx": "react-jsx",
-    "lib": ["dom", "esnext", "webworker"]
+    "useUnknownInCatchVariables": false,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react",
+    "lib": ["dom", "esnext", "webworker"],
+    "typeRoots": ["node_modules/@types", "typings"]
   },
-  "include": [
-    ".dumirc.ts",
-    "src/**/*",
-    "./typings/**/*",
-    "example/**/*",
-    "modules/**/*",
-    "docs/**/*"
-  ]
+  "include": ["src/**/*"]
 }
