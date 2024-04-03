@@ -9,7 +9,7 @@ import { singleton } from '@difizen/mana-app';
 import { URI } from '@opensumi/ide-core-common';
 import { IFileServiceClient } from '@opensumi/ide-file-service';
 import { message } from 'antd';
-import { injector } from '../injector';
+import { injector } from '../browser/injector';
 
 @singleton({ contrib: ContentContribution })
 export class LibroOpensumiContentContribution implements ContentContribution {

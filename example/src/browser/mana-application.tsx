@@ -11,7 +11,7 @@ import {
   getStorageValue,
   SplitPanel,
 } from '@opensumi/ide-core-browser/lib/components';
-import { LibroOpensumiModule } from './mana/mana-module';
+import { DemoLibroModule } from './mana/demo-module';
 // import { LibroOpensumiModule } from '@difizen/opensumi-module-libro/browser/mana-module';
 // import { LibroModule } from '@difizen/libro-core';
 
@@ -21,7 +21,7 @@ export function CustomToolbarLayout() {
     <BoxPanel direction="top-to-bottom">
       <ManaComponents.Application
         context={{ container: GlobalContainer }}
-        modules={[ManaAppPreset, LibroJupyterModule, LibroOpensumiModule]}
+        modules={[ManaAppPreset, LibroJupyterModule, DemoLibroModule]}
         renderChildren
       />
       <SlotRenderer

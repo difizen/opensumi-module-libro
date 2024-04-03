@@ -6,7 +6,7 @@ import {
 } from '@difizen/libro-jupyter';
 import { inject, ModalService, singleton, URI } from '@difizen/mana-app';
 import { IFileServiceClient } from '@opensumi/ide-file-service';
-import { injector } from '../injector';
+import { injector } from '../browser/injector';
 
 @singleton({ contrib: ContentSaveContribution })
 export class LibroOpensumiContentSaveContribution
