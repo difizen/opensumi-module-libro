@@ -1,6 +1,6 @@
 {
   "name": "@difizen/opensumi-module-libro",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "libro on opensumi",
   "repository": {
     "type": "git",
@@ -26,7 +26,6 @@
     "lint": "npm run lint:es && npm run lint:css",
     "lint:css": "stylelint \"{src,test}/**/*.{css,less}\"",
     "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
-    "postinstall": "npm run prepare",
     "start:client": "cross-env NODE_ENV=development webpack-dev-server --config ./example/configs/webpack.browser.config.js --color --watch",
     "start:webview": "webpack-dev-server --config ./example/configs/webpack.webview.config.js",
     "start:server": "cross-env EXT_MODE=js KTLOG_SHOW_DEBUG=1 node --inspect=9991 -r ts-node/register -r tsconfig-paths/register ./example/src/node/index.ts",
