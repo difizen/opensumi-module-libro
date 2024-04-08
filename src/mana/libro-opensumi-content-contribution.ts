@@ -5,20 +5,23 @@ import {
   LibroJupyterModel,
   NotebookOption,
 } from '@difizen/libro-jupyter';
-import { singleton } from '@difizen/mana-app';
+import { inject, singleton } from '@difizen/mana-app';
+import { Injector } from '@opensumi/di';
 import { URI } from '@opensumi/ide-core-common';
 import { IFileServiceClient } from '@opensumi/ide-file-service';
 import { message } from 'antd';
-import { injector } from '../browser/injector';
+import { OpensumiInjector } from '../common';
 
 @singleton({ contrib: ContentContribution })
 export class LibroOpensumiContentContribution implements ContentContribution {
+  @inject(OpensumiInjector) injector: Injector;
+
   canHandle = (options) => {
     return options.loadType === 'libro-opensumi-loader' ? 100 : 1;
   };
   async loadContent(options: NotebookOption, model: LibroJupyterModel) {
     const fileServiceClient: IFileServiceClient =
-      injector.get(IFileServiceClient);
+      this.injector.get(IFileServiceClient);
     let notebookContent: INotebookContent;
     try {
       const { content } = await fileServiceClient.readFile(

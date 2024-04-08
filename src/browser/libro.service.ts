@@ -1,8 +1,9 @@
 import { LibroService, LibroView } from '@difizen/libro-jupyter';
-import { GlobalContainer } from '@difizen/mana-app';
-import { Injectable } from '@opensumi/di';
+import { Container } from '@difizen/mana-app';
+import { Autowired, Injectable } from '@opensumi/di';
 import { URI, WithEventBus } from '@opensumi/ide-core-browser';
 import { ResourceDecorationNeedChangeEvent } from '@opensumi/ide-editor';
+import { ManaContainer } from '../common';
 
 export const ILibroOpensumiService = Symbol('ILibroOpensumiService');
 
@@ -15,12 +16,8 @@ export interface ILibroOpensumiService {
 // @singleton()
 @Injectable()
 export class LibroOpensumiService extends WithEventBus {
-  protected libroService: LibroService;
-
-  constructor() {
-    super();
-    this.libroService = GlobalContainer.get(LibroService);
-  }
+  @Autowired(ManaContainer)
+  private readonly manaContainer: Container;
 
   getOrCreatLibroView = async (uri: URI) => {
     const libroOption = {
@@ -28,7 +25,8 @@ export class LibroOpensumiService extends WithEventBus {
       resource: uri.toString(),
       loadType: 'libro-opensumi-loader',
     };
-    const libroView = await this.libroService.getOrCreateView(libroOption);
+    const libroService = this.manaContainer.get(LibroService);
+    const libroView = await libroService.getOrCreateView(libroOption);
     return libroView;
   };
 

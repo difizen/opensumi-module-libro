@@ -1,6 +1,8 @@
+import { initLibroOpensumi } from '@difizen/opensumi-module-libro';
+import { Injector } from '@opensumi/di';
 import { IClientAppOpts } from '@opensumi/ide-core-browser';
 import { ClientApp } from '@opensumi/ide-core-browser/lib/bootstrap/app';
-import { injector } from '../../../src/browser/injector';
+import { manaContainer } from './mana-application';
 import { StatusBarContribution } from './status-bar/status-bar.contribution';
 
 // Enable OpenSumi debug logger
@@ -8,8 +10,9 @@ process.env.KTLOG_SHOW_DEBUG = 'true';
 
 export async function renderApp(opts: IClientAppOpts) {
   const isDev = process.env.DEVELOPMENT ?? true; //TODO
+  const injector = new Injector();
+  initLibroOpensumi(injector, manaContainer);
   injector.addProviders(StatusBarContribution);
-
   const hostname = window.location.hostname;
   // const query = new URLSearchParams(window.location.search);
   // 线上的静态服务和 IDE 后端是一个 Server

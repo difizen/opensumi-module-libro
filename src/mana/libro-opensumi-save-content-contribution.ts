@@ -5,14 +5,16 @@ import {
   SaveFileErrorModal,
 } from '@difizen/libro-jupyter';
 import { inject, ModalService, singleton, URI } from '@difizen/mana-app';
+import { Injector } from '@opensumi/di';
 import { IFileServiceClient } from '@opensumi/ide-file-service';
-import { injector } from '../browser/injector';
+import { OpensumiInjector } from '../common';
 
 @singleton({ contrib: ContentSaveContribution })
 export class LibroOpensumiContentSaveContribution
   implements ContentSaveContribution
 {
   @inject(ModalService) protected readonly modalService: ModalService;
+  @inject(OpensumiInjector) injector: Injector;
 
   canHandle = (options: NotebookOption) => {
     return options.loadType === 'libro-opensumi-loader' ? 100 : 1;
@@ -20,7 +22,7 @@ export class LibroOpensumiContentSaveContribution
   saveContent = async (options: NotebookOption, model: LibroJupyterModel) => {
     const uri = new URI(options.resource.toString());
     const fileServiceClient: IFileServiceClient =
-      injector.get(IFileServiceClient);
+      this.injector.get(IFileServiceClient);
     const stat = await fileServiceClient.getFileStat(
       options.resource.toString(),
     );

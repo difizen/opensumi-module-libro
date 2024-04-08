@@ -5,7 +5,8 @@
     "paths": {
       "@@/*": [".dumi/tmp/*"],
       "@difizen/opensumi-module-libro": ["../src"],
-      "@difizen/opensumi-module-libro/*": ["../src/*", "*"]
+      "@difizen/opensumi-module-libro/*": ["../src/*", "*"],
+      "modules/*": ["../modules/*", "*"]
     },
     "module": "commonjs",
     "target": "es2017",
