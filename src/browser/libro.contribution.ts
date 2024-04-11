@@ -11,9 +11,12 @@ import {
 import {
   BrowserEditorContribution,
   EditorComponentRegistry,
+  IResource,
+  ResourceService,
   WorkbenchEditorService,
 } from '@opensumi/ide-editor/lib/browser/types';
 import { IconService } from '@opensumi/ide-theme/lib/browser';
+import { IconType } from '@opensumi/ide-theme/lib/common';
 import { IWorkspaceService } from '@opensumi/ide-workspace/lib/common';
 import { OpensumiLibroView } from './libro.view';
 
@@ -75,11 +78,23 @@ export class LibroContribution
     );
   }
 
-  async onDidStart() {
-    // console.log('constructor LibroOpensumiService',GlobalContainer,LibroView)
-    // this.libroService = GlobalContainer.get(LibroService)
-    this.editorService.open(new URI(`${LIBRO_COMPONENTS_SCHEME_ID}://`), {
-      preview: false,
+  registerResource(service: ResourceService) {
+    service.registerResourceProvider({
+      scheme: LIBRO_COMPONENTS_SCHEME_ID,
+      provideResource: async (uri: URI): Promise<IResource<any>> => {
+        const iconClass = this.iconService.fromIcon(
+          '',
+          'https://mdn.alipayobjects.com/huamei_xt20ge/afts/img/A*LDFvSptm_zgAAAAAAAAAAAAADiuUAQ/original',
+          IconType.Background,
+        );
+        return {
+          uri,
+          name: 'notebook',
+          icon: iconClass!,
+        };
+      },
     });
   }
+
+  async onDidStart() {}
 }
