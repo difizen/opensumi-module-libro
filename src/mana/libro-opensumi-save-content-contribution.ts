@@ -4,7 +4,13 @@ import {
   NotebookOption,
   SaveFileErrorModal,
 } from '@difizen/libro-jupyter';
-import { inject, ModalService, singleton, URI } from '@difizen/mana-app';
+import {
+  getOrigin,
+  inject,
+  ModalService,
+  singleton,
+  URI,
+} from '@difizen/mana-app';
 import { Injector } from '@opensumi/di';
 import { IFileServiceClient } from '@opensumi/ide-file-service';
 import { OpensumiInjector } from '../common';
@@ -21,8 +27,9 @@ export class LibroOpensumiContentSaveContribution
   };
   saveContent = async (options: NotebookOption, model: LibroJupyterModel) => {
     const uri = new URI(options.resource.toString());
-    const fileServiceClient: IFileServiceClient =
-      this.injector.get(IFileServiceClient);
+    const fileServiceClient: IFileServiceClient = getOrigin(
+      this.injector.get(IFileServiceClient),
+    );
     const stat = await fileServiceClient.getFileStat(
       options.resource.toString(),
     );
