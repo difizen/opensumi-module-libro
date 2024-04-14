@@ -30,13 +30,16 @@ export class LibroOpensumiContentSaveContribution
     const fileServiceClient: IFileServiceClient = getOrigin(
       this.injector.get(IFileServiceClient),
     );
-    const stat = await fileServiceClient.getFileStat(
+    const stat = await getOrigin(fileServiceClient).getFileStat(
       options.resource.toString(),
     );
     try {
       const notebookContent = model.toJSON();
       if (!stat) throw new Error('Get file stat error!');
-      fileServiceClient.setContent(stat, JSON.stringify(notebookContent));
+      getOrigin(fileServiceClient).setContent(
+        stat,
+        JSON.stringify(notebookContent),
+      );
     } catch (e: any) {
       model.fileService.fileSaveErrorEmitter.fire({
         cause: e.errorCause,

@@ -25,10 +25,10 @@ export class LibroOpensumiContentContribution implements ContentContribution {
     );
     let notebookContent: INotebookContent;
     try {
-      const { content } = await fileServiceClient.readFile(
+      const { content } = await getOrigin(fileServiceClient).readFile(
         options.resource.toString(),
       );
-      const stat = await fileServiceClient.getFileStat(
+      const stat = await getOrigin(fileServiceClient).getFileStat(
         options.resource.toString(),
       );
       const uri = new URI(options.resource.toString());
