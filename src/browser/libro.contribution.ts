@@ -1,3 +1,4 @@
+import { Container, ThemeService } from '@difizen/mana-app';
 import { Autowired } from '@opensumi/di';
 import { ClientAppContribution } from '@opensumi/ide-core-browser/lib/common';
 import {
@@ -16,8 +17,9 @@ import {
   WorkbenchEditorService,
 } from '@opensumi/ide-editor/lib/browser/types';
 import { IconService } from '@opensumi/ide-theme/lib/browser';
-import { IconType } from '@opensumi/ide-theme/lib/common';
+import { IconType, IThemeService } from '@opensumi/ide-theme/lib/common';
 import { IWorkspaceService } from '@opensumi/ide-workspace/lib/common';
+import { ManaContainer } from '../common';
 import { OpensumiLibroView } from './libro.view';
 
 const LIBRO_COMPONENTS_VIEW_COMMAND = {
@@ -38,6 +40,9 @@ export class LibroContribution
   @Autowired(IWorkspaceService)
   protected readonly workspaceService: IWorkspaceService;
 
+  @Autowired(ManaContainer)
+  private readonly manaContainer: Container;
+
   @Autowired(IconService)
   protected readonly iconService: IconService;
 
@@ -46,6 +51,9 @@ export class LibroContribution
 
   @Autowired(WorkbenchEditorService)
   protected readonly editorService: WorkbenchEditorService;
+
+  @Autowired(IThemeService)
+  protected readonly themeService: IThemeService;
 
   registerCommands(registry: CommandRegistry) {
     registry.registerCommand(LIBRO_COMPONENTS_VIEW_COMMAND, {
@@ -96,5 +104,12 @@ export class LibroContribution
     });
   }
 
-  async onDidStart() {}
+  async onDidStart() {
+    const manaThemeService = this.manaContainer.get(ThemeService);
+    const curTheme = await this.themeService.getCurrentTheme();
+    manaThemeService.setCurrentTheme(curTheme.type);
+    this.themeService.onThemeChange((theme) => {
+      manaThemeService.setCurrentTheme(theme.type);
+    });
+  }
 }
