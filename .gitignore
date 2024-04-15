@@ -9,6 +9,7 @@ extensions/
 node_modules/**
 **/dist/*
 **/lib/*
+**/es/*
 **/hosted/*
 *.log
 *.lock

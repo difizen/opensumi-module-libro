@@ -1,4 +1,4 @@
-import { OpensumiLibroModule } from '@difizen/opensumi-module-libro/browser';
+import { OpensumiLibroModule } from '@difizen/opensumi-module-libro';
 import { ClientAddonModule } from '@opensumi/ide-addons/lib/browser';
 import { CommentsModule } from '@opensumi/ide-comments/lib/browser';
 import {
@@ -44,8 +44,8 @@ import { VariableModule } from '@opensumi/ide-variable/lib/browser';
 import { WebviewModule } from '@opensumi/ide-webview';
 import { WorkspaceEditModule } from '@opensumi/ide-workspace-edit/lib/browser';
 import { WorkspaceModule } from '@opensumi/ide-workspace/lib/browser';
-import { BuitinEventsSampleModule } from 'modules/builtin-events/browser';
-import { CustomEditorResourceModule } from 'modules/custom-editor-resource/browser';
+import { BuitinEventsSampleModule } from '../../../modules/builtin-events/browser';
+import { CustomEditorResourceModule } from '../../../modules/custom-editor-resource/browser';
 
 export const CommonBrowserModules: ConstructorOf<BrowserModule>[] = [
   MainLayoutModule,

@@ -12,15 +12,15 @@ import {
   SplitPanel,
 } from '@opensumi/ide-core-browser/lib/components';
 import { DemoLibroModule } from './mana/demo-module';
-// import { LibroOpensumiModule } from '@difizen/opensumi-module-libro/browser/mana-module';
-// import { LibroModule } from '@difizen/libro-core';
+
+export const manaContainer = GlobalContainer.createChild();
 
 export function CustomToolbarLayout() {
   const { colors, layout } = getStorageValue();
   return (
     <BoxPanel direction="top-to-bottom">
       <ManaComponents.Application
-        context={{ container: GlobalContainer }}
+        context={{ container: manaContainer }}
         modules={[ManaAppPreset, LibroJupyterModule, DemoLibroModule]}
         renderChildren
       />
