@@ -20,8 +20,16 @@ export class LibroOpensumiContentContribution implements ContentContribution {
     return options.loadType === 'libro-opensumi-loader' ? 100 : 1;
   };
   async loadContent(options: NotebookOption, model: LibroJupyterModel) {
-    const fileServiceClient: IFileServiceClient = getOrigin(
-      this.injector.get(IFileServiceClient),
+    const fileServiceClient: IFileServiceClient =
+      this.injector.get(IFileServiceClient);
+    console.log(
+      '🚀 ~ LibroOpensumiContentContribution ~ loadContent ~ fileServiceClient:',
+      fileServiceClient,
+    );
+    const originFileServiceClient = getOrigin(fileServiceClient);
+    console.log(
+      '🚀 ~ LibroOpensumiContentContribution ~ loadContent ~ originFileServiceClient:',
+      originFileServiceClient,
     );
     let notebookContent: INotebookContent;
     try {
