@@ -22,15 +22,6 @@ export class LibroOpensumiContentContribution implements ContentContribution {
   async loadContent(options: NotebookOption, model: LibroJupyterModel) {
     const fileServiceClient: IFileServiceClient =
       this.injector.get(IFileServiceClient);
-    console.log(
-      '🚀 ~ LibroOpensumiContentContribution ~ loadContent ~ fileServiceClient:',
-      fileServiceClient,
-    );
-    const originFileServiceClient = getOrigin(fileServiceClient);
-    console.log(
-      '🚀 ~ LibroOpensumiContentContribution ~ loadContent ~ originFileServiceClient:',
-      originFileServiceClient,
-    );
     let notebookContent: INotebookContent;
     try {
       const { content } = await getOrigin(fileServiceClient).readFile(
@@ -39,8 +30,17 @@ export class LibroOpensumiContentContribution implements ContentContribution {
       const stat = await getOrigin(fileServiceClient).getFileStat(
         options.resource.toString(),
       );
+      if (content.byteLength === 0) {
+        notebookContent = {
+          cells: [],
+          metadata: {},
+          nbformat: 4,
+          nbformat_minor: 5,
+        };
+      } else {
+        notebookContent = JSON.parse(content.toString());
+      }
       const uri = new URI(options.resource.toString());
-      notebookContent = JSON.parse(content.toString());
       const currentFileContents: IContentsModel = {
         name: uri.path.name,
         path: uri.path.toString(),
