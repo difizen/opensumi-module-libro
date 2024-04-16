@@ -16,17 +16,27 @@ export const OpensumiLibroView = (...params) => {
   );
 
   React.useEffect(() => {
+    let autoSaveHandle: undefined | number = undefined;
     libroOpensumiService
       .getOrCreatLibroView(params[0].resource.uri)
       .then((libro) => {
         setLibroView(libro);
         libro.model.onChanged(() => {
           libroOpensumiService.updateDirtyStatus(params[0].resource.uri, true);
+          autoSaveHandle = window.setTimeout(() => {
+            libro.save();
+            if (libro) {
+              libro.model.dirty = false;
+            }
+          }, 1000);
         });
         libro.onSave(() => {
           libroOpensumiService.updateDirtyStatus(params[0].resource.uri, false);
         });
       });
+    return () => {
+      window.clearTimeout(autoSaveHandle);
+    };
   }, []);
   return (
     <div className={styles.libroView}>
