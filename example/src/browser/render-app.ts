@@ -1,4 +1,5 @@
 import { initLibroOpensumi } from '@difizen/opensumi-module-libro';
+import '@difizen/opensumi-module-libro/browser/libro.color.tokens';
 import { Injector } from '@opensumi/di';
 import { IClientAppOpts } from '@opensumi/ide-core-browser';
 import { ClientApp } from '@opensumi/ide-core-browser/lib/bootstrap/app';
