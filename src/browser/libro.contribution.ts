@@ -1,6 +1,5 @@
 import { Container, ThemeService } from '@difizen/mana-app';
 import { Autowired } from '@opensumi/di';
-import { ClientAppContribution } from '@opensumi/ide-core-browser/lib/common';
 import {
   CommandContribution,
   CommandRegistry,
@@ -8,7 +7,8 @@ import {
   Schemes,
   StorageProvider,
   URI,
-} from '@opensumi/ide-core-common';
+} from '@opensumi/ide-core-browser';
+import { ClientAppContribution } from '@opensumi/ide-core-browser/lib/common';
 import {
   BrowserEditorContribution,
   EditorComponentRegistry,

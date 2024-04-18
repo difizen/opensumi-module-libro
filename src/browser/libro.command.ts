@@ -1,12 +1,12 @@
 import { LibroSearchManager, LibroService } from '@difizen/libro-jupyter';
 import { Container } from '@difizen/mana-app';
 import { Autowired } from '@opensumi/di';
-import { EDITOR_COMMANDS } from '@opensumi/ide-core-browser';
 import {
   CommandContribution,
   CommandRegistry,
-} from '@opensumi/ide-core-common/lib/command';
-import { Domain } from '@opensumi/ide-core-common/lib/di-helper';
+  Domain,
+  EDITOR_COMMANDS,
+} from '@opensumi/ide-core-browser';
 import { ManaContainer } from '../common';
 
 @Domain(CommandContribution)

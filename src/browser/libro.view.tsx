@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { LibroView } from '@difizen/libro-jupyter';
 import { ViewRender } from '@difizen/mana-app';
-import '@opensumi/antd-theme/lib/index.css';
 import { useInjectable } from '@opensumi/ide-core-browser';
 import styles from './libro.module.less';
 import { ILibroOpensumiService } from './libro.service';
