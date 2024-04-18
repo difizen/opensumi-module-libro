@@ -7,9 +7,9 @@ import {
 } from '@difizen/libro-jupyter';
 import { getOrigin, inject, singleton } from '@difizen/mana-app';
 import { Injector } from '@opensumi/di';
-import { URI } from '@opensumi/ide-core-common';
+import { URI } from '@opensumi/ide-core-browser';
 import { IFileServiceClient } from '@opensumi/ide-file-service';
-import { message } from 'antd';
+import { IMessageService } from '@opensumi/ide-overlay';
 import { OpensumiInjector } from '../common';
 
 @singleton({ contrib: ContentContribution })
@@ -22,6 +22,7 @@ export class LibroOpensumiContentContribution implements ContentContribution {
   async loadContent(options: NotebookOption, model: LibroJupyterModel) {
     const fileServiceClient: IFileServiceClient =
       this.injector.get(IFileServiceClient);
+    const messageService = this.injector.get(IMessageService);
     let notebookContent: INotebookContent;
     try {
       const { content } = await getOrigin(fileServiceClient).readFile(
@@ -58,7 +59,9 @@ export class LibroOpensumiContentContribution implements ContentContribution {
         model.startKernelConnection();
       }
     } catch (e) {
-      message.error('File Read Error');
+      messageService.error(
+        `Notebook file ${options.resource.toString()} read error: ${e}`,
+      );
       notebookContent = {
         cells: [],
         metadata: {},
