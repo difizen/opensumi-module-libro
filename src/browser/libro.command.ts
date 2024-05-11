@@ -46,5 +46,21 @@ export class LibroCommandContribution implements CommandContribution {
         return false;
       },
     });
+    commands.registerHandler('markers', {
+      execute: () => {
+        const libroService = this.manaContainer.get(LibroService);
+        const libro = libroService.active;
+        if (libro && libro.activeCell) {
+          libro.mergeCellBelow(libro.activeCell);
+        }
+      },
+      isEnabled: () => {
+        const libroService = this.manaContainer.get(LibroService);
+        if (libroService.focus) {
+          return true;
+        }
+        return false;
+      },
+    });
   }
 }
