@@ -14,8 +14,8 @@ export const ILibroOpensumiService = Symbol('ILibroOpensumiService');
 export interface ILibroOpensumiService {
   manaContainer: Container;
   editorService: WorkbenchEditorService;
-  getOrCreatLibroView(uri: URI): Promise<LibroView>;
-  updateDirtyStatus(uri: URI, dirty: boolean): void;
+  getOrCreatLibroView: (uri: URI) => Promise<LibroView>;
+  updateDirtyStatus: (uri: URI, dirty: boolean) => void;
 }
 
 // @singleton()

@@ -5,6 +5,7 @@ import {
 } from '@difizen/mana-app';
 // import { LibroJupyterModule } from '@difizen/libro-jupyter';
 import { LibroJupyterModule } from '@difizen/libro-jupyter';
+import { LibroTOCModule } from '@difizen/libro-toc';
 import { SlotRenderer } from '@opensumi/ide-core-browser';
 import {
   BoxPanel,
@@ -21,7 +22,12 @@ export function CustomToolbarLayout() {
     <BoxPanel direction="top-to-bottom">
       <ManaComponents.Application
         context={{ container: manaContainer }}
-        modules={[ManaAppPreset, LibroJupyterModule, DemoLibroModule]}
+        modules={[
+          ManaAppPreset,
+          LibroJupyterModule,
+          DemoLibroModule,
+          LibroTOCModule,
+        ]}
         renderChildren
       />
       <SlotRenderer
