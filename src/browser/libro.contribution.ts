@@ -20,14 +20,15 @@ import { IconService } from '@opensumi/ide-theme/lib/browser';
 import { IconType, IThemeService } from '@opensumi/ide-theme/lib/common';
 import { IWorkspaceService } from '@opensumi/ide-workspace/lib/common';
 import { ManaContainer } from '../common';
+import {
+  LIBRO_COMPONENTS_ID,
+  LIBRO_COMPONENTS_SCHEME_ID,
+} from './libro.protocol';
 import { OpensumiLibroView } from './libro.view';
 
 const LIBRO_COMPONENTS_VIEW_COMMAND = {
   id: 'opensumi-libro',
 };
-
-const LIBRO_COMPONENTS_ID = 'opensumi:libro';
-const LIBRO_COMPONENTS_SCHEME_ID = 'ipynb';
 
 @Domain(BrowserEditorContribution, ClientAppContribution, CommandContribution)
 // export class LibroContribution implements ClientAppContribution, CommandContribution {
