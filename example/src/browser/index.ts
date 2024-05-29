@@ -5,7 +5,6 @@ import { renderApp } from './render-app';
 
 import { WelcomeContentSampleModule } from 'modules/add-welcome-content/browser';
 import { ComponentsSampleModule } from 'modules/components/browser';
-import { TodoListModule } from 'modules/connection/browser';
 import { EditorTitleSampleModule } from 'modules/editor-title/browser';
 import { TerminalEnvModule } from 'modules/terminal-env/browser';
 import { TerminalBasicUsageModule } from 'modules/terminal-usage/browser';
@@ -30,7 +29,6 @@ export const startApp = () =>
   renderApp({
     modules: [
       ...CommonBrowserModules,
-      TodoListModule,
       TerminalEnvModule,
       TerminalBasicUsageModule,
       ComponentsSampleModule,

@@ -6,7 +6,6 @@ import { renderApp } from './render-app';
 import { SlotLocation } from '@opensumi/ide-core-browser';
 import { WelcomeContentSampleModule } from 'modules/add-welcome-content/browser';
 import { ComponentsSampleModule } from 'modules/components/browser';
-import { TodoListModule } from 'modules/connection/browser';
 import { EditorTitleSampleModule } from 'modules/editor-title/browser';
 import { TerminalEnvModule } from 'modules/terminal-env/browser';
 import { TerminalBasicUsageModule } from 'modules/terminal-usage/browser';
@@ -21,7 +20,6 @@ import '@opensumi/ide-core-browser/lib/style/index.less';
 import { BuitinServicesSampleModule } from 'modules/builtin-services/browser';
 import { CustomContextMenuModule } from 'modules/custom-context-menu/browser';
 import { CustomToolbarModule } from 'modules/custom-toolbar/browser';
-import { CustomToolbarLayout } from 'modules/custom-toolbar/browser/custom-layout';
 import { CustomEditorEmptyComponentModule } from 'modules/editor-empty-component/browser';
 // import { DefaultLayout } from '@opensumi/ide-core-browser/lib/components';
 import { CustomViewModule } from 'modules/custom-view/browser';
@@ -33,7 +31,6 @@ export const startApp = () =>
   renderApp({
     modules: [
       ...CommonBrowserModules,
-      TodoListModule,
       TerminalEnvModule,
       TerminalBasicUsageModule,
       ComponentsSampleModule,
