@@ -5,6 +5,9 @@ import { LibroContribution } from './libro.contribution';
 import { ILibroOpensumiService, LibroOpensumiService } from './libro.service';
 import { TocContribution } from './toc/toc.contribution';
 export * from './libro.color.tokens';
+export * from './libro.contribution';
+export * from './libro.protocol';
+export * from './libro.service';
 
 @Injectable()
 export class OpensumiLibroModule extends BrowserModule {
