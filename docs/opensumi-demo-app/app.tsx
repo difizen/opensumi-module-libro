@@ -51,6 +51,16 @@ export const startApp = () =>
         [SlotLocation.top]: {
           modules: ['@opensumi/ide-menu-bar', 'test-toolbar'],
         },
+        [SlotLocation.left]: {
+          modules: [
+            '@opensumi/ide-explorer',
+            '@opensumi/ide-search',
+            '@opensumi/ide-scm',
+            '@opensumi/ide-extension-manager',
+            '@opensumi/ide-debug',
+            '@opensumi/libro-kernel-terminal',
+          ],
+        },
       },
       customAction: {
         modules: ['test-toolbar'],
