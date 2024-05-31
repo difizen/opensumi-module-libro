@@ -21,6 +21,7 @@ import { CustomContextMenuModule } from 'modules/custom-context-menu/browser';
 import { CustomToolbarModule } from 'modules/custom-toolbar/browser';
 import { CustomEditorEmptyComponentModule } from 'modules/editor-empty-component/browser';
 // import { DefaultLayout } from '@opensumi/ide-core-browser/lib/components';
+import { SlotLocation } from '@opensumi/ide-core-browser';
 import { CustomViewModule } from 'modules/custom-view/browser';
 import { CustomMonacoEditorServicesSampleModule } from 'modules/editor-monaco-component/browser';
 import { CustomToolbarLayout } from './mana-application';
@@ -45,6 +46,18 @@ export const startApp = () =>
     ],
     layoutConfig: {
       ...defaultConfig,
+      ...{
+        [SlotLocation.left]: {
+          modules: [
+            '@opensumi/ide-explorer',
+            '@opensumi/ide-search',
+            '@opensumi/ide-scm',
+            '@opensumi/ide-extension-manager',
+            '@opensumi/ide-debug',
+            '@opensumi/libro-kernel-terminal',
+          ],
+        },
+      },
       // ...{
       //   [SlotLocation.top]: {
       //     modules: ['@opensumi/ide-menu-bar', 'test-toolbar'],
