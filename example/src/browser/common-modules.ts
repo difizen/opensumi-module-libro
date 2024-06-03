@@ -1,4 +1,5 @@
 import { OpensumiLibroModule } from '@difizen/opensumi-module-libro';
+import { KernelPanelModule } from '@difizen/opensumi-module-libro/browser/kernel-panel';
 import { ClientAddonModule } from '@opensumi/ide-addons/lib/browser';
 import { CommentsModule } from '@opensumi/ide-comments/lib/browser';
 import {
@@ -92,4 +93,5 @@ export const CommonBrowserModules: ConstructorOf<BrowserModule>[] = [
   BuitinEventsSampleModule,
   CustomEditorResourceModule,
   OpensumiLibroModule,
+  KernelPanelModule,
 ];
