@@ -76,7 +76,10 @@ export const KernelPanel: React.FC = () => {
         items.set(kernel.id, {
           id: kernel.id,
           name: kernel.name,
-          shutdown: async () => await libroKernelManager.shutdown(kernel.id),
+          shutdown: async () => {
+            await libroKernelManager.shutdown(kernel.id);
+            await libroSessionManager.refreshRunning();
+          },
           notebooks: [
             { sessionId: session.id, name: session.name, path: session.path },
           ],
