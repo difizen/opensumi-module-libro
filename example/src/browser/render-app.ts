@@ -1,4 +1,8 @@
-import { initLibroOpensumi } from '@difizen/opensumi-module-libro';
+import {
+  initLibroColorToken,
+  initLibroOpensumi,
+} from '@difizen/opensumi-module-libro';
+import { initKernelPanelColorToken } from '@difizen/opensumi-module-libro/browser/kernel-panel/kernel.panel.color.tokens';
 import '@difizen/opensumi-module-libro/browser/libro.color.tokens';
 import { Injector } from '@opensumi/di';
 import { IClientAppOpts } from '@opensumi/ide-core-browser';
@@ -6,6 +10,8 @@ import { ClientApp } from '@opensumi/ide-core-browser/lib/bootstrap/app';
 import { manaContainer } from './mana-application';
 import { StatusBarContribution } from './status-bar/status-bar.contribution';
 
+initLibroColorToken();
+initKernelPanelColorToken();
 // Enable OpenSumi debug logger
 process.env.KTLOG_SHOW_DEBUG = 'true';
 

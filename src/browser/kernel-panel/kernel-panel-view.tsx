@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useInjectable } from '@opensumi/ide-core-browser';
 import { WorkbenchEditorService } from '@opensumi/ide-editor';
 import { WorkbenchEditorServiceImpl } from '@opensumi/ide-editor/lib/browser/workbench-editor.service';
+import { IThemeService } from '@opensumi/ide-theme/lib/common';
 import React from 'react';
 import { ManaContainer } from '../../common';
 import { LibroCollapse } from './collapse';
@@ -28,6 +29,10 @@ export const KernelPanel: React.FC = () => {
 
   const [refresh, setRefresh] = useState(new Date().toUTCString());
 
+  const themeService = useInjectable<IThemeService>(IThemeService);
+
+  const [theme, setTheme] = useState<string>('dark');
+
   const [kernelItems, setKernelItems] = useState<
     LibroPanelCollapseKernelItem[] | undefined
   >();
@@ -35,6 +40,15 @@ export const KernelPanel: React.FC = () => {
   const handleRefresh = () => {
     setRefresh(new Date().toUTCString());
   };
+
+  useEffect(() => {
+    themeService.getCurrentTheme().then((curTheme) => {
+      setTheme(curTheme.type);
+    });
+    themeService.onThemeChange((curTheme) => {
+      setTheme(curTheme.type);
+    });
+  }, []);
 
   useEffect(() => {
     if (
@@ -75,6 +89,19 @@ export const KernelPanel: React.FC = () => {
 
   return (
     <div className="kernel-and-panel" key={refresh}>
+      <div className="kernel-and-panel-header">
+        <div className="kernel-and-panel-title">运行的终端和内核</div>
+        <img
+          width={16}
+          height={16}
+          src={
+            theme === 'dark'
+              ? 'https://mdn.alipayobjects.com/huamei_xt20ge/afts/img/A*rY0oTpYcmZsAAAAAAAAAAAAADiuUAQ/original'
+              : 'https://mdn.alipayobjects.com/huamei_xt20ge/afts/img/A*VApRSqHz8wQAAAAAAAAAAAAADiuUAQ/original'
+          }
+          onClick={handleRefresh}
+        ></img>
+      </div>
       <LibroCollapse
         type={LibroPanelCollapseItemType.PAGE}
         refresh={handleRefresh}
