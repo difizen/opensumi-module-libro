@@ -29,7 +29,7 @@ export class KernelPanelContribution implements ComponentContribution {
       iconClass: iconClass,
       title: '运行的终端和内核',
       component: KernelPanel,
-      priority: 9,
+      priority: 0,
       activateKeyBinding: 'ctrlcmd+shift+k',
     });
   }

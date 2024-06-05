@@ -3,8 +3,6 @@ import { Container } from '@difizen/mana-app';
 import { useEffect, useState } from 'react';
 
 import { useInjectable } from '@opensumi/ide-core-browser';
-import { WorkbenchEditorService } from '@opensumi/ide-editor';
-import { WorkbenchEditorServiceImpl } from '@opensumi/ide-editor/lib/browser/workbench-editor.service';
 import { IThemeService } from '@opensumi/ide-theme/lib/common';
 import React from 'react';
 import { ManaContainer } from '../../common';
@@ -16,16 +14,11 @@ import {
 } from './kernel.panel.protocol';
 
 export const KernelPanel: React.FC = () => {
-  const editorService = useInjectable<WorkbenchEditorServiceImpl>(
-    WorkbenchEditorService,
-  );
   const manaContainer = useInjectable<Container>(ManaContainer);
 
   const libroKernelManager = manaContainer.get(LibroKernelManager);
 
   const libroSessionManager = manaContainer.get(LibroSessionManager);
-
-  const openedUris = editorService.getAllOpenedUris();
 
   const [refresh, setRefresh] = useState(new Date().toUTCString());
 
@@ -76,7 +69,10 @@ export const KernelPanel: React.FC = () => {
         items.set(kernel.id, {
           id: kernel.id,
           name: kernel.name,
-          shutdown: async () => await libroKernelManager.shutdown(kernel.id),
+          shutdown: async () => {
+            await libroKernelManager.shutdown(kernel.id);
+            await libroSessionManager.refreshRunning();
+          },
           notebooks: [
             { sessionId: session.id, name: session.name, path: session.path },
           ],
@@ -102,19 +98,6 @@ export const KernelPanel: React.FC = () => {
           onClick={handleRefresh}
         ></img>
       </div>
-      <LibroCollapse
-        type={LibroPanelCollapseItemType.PAGE}
-        refresh={handleRefresh}
-        items={openedUris.map((item) => {
-          return {
-            id: item.toString(),
-            name: item.displayName as string,
-          };
-        })}
-        shutdownAll={async () => {
-          editorService.closeAllOnlyConfirmOnce();
-        }}
-      />
       <LibroCollapse
         type={LibroPanelCollapseItemType.KERNEL}
         refresh={handleRefresh}

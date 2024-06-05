@@ -1,8 +1,9 @@
 import * as React from 'react';
 
-import { LibroView } from '@difizen/libro-jupyter';
-import { ViewRender } from '@difizen/mana-app';
+import { DocumentCommands, LibroView } from '@difizen/libro-jupyter';
+import { CommandRegistry, Container, ViewRender } from '@difizen/mana-app';
 import { useInjectable } from '@opensumi/ide-core-browser';
+import { ManaContainer } from '../common';
 import styles from './libro.module.less';
 import { ILibroOpensumiService } from './libro.service';
 
@@ -10,6 +11,9 @@ export const OpensumiLibroView = (...params) => {
   const libroOpensumiService = useInjectable<ILibroOpensumiService>(
     ILibroOpensumiService,
   );
+  const manaContainer = useInjectable<Container>(ManaContainer);
+  const commandRegistry = manaContainer.get(CommandRegistry);
+
   const [libroView, setLibroView] = React.useState<LibroView | undefined>(
     undefined,
   );
@@ -23,10 +27,19 @@ export const OpensumiLibroView = (...params) => {
         libro.model.onChanged(() => {
           libroOpensumiService.updateDirtyStatus(params[0].resource.uri, true);
           autoSaveHandle = window.setTimeout(() => {
-            libro.save();
-            if (libro) {
-              libro.model.dirty = false;
-            }
+            commandRegistry
+              .executeCommand(
+                DocumentCommands.Save.id,
+                undefined,
+                libro,
+                undefined,
+                { reason: 'autoSave' },
+              )
+              .then(() => {
+                if (libro) {
+                  libro.model.dirty = false;
+                }
+              });
           }, 1000);
         });
         libro.onSave(() => {
