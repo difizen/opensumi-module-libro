@@ -13,12 +13,12 @@ export const ILibroOpensumiService = Symbol('ILibroOpensumiService');
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export interface ILibroOpensumiService {
   manaContainer: Container;
+  libroRefreshMap: Map<string, boolean>;
   editorService: WorkbenchEditorService;
   getOrCreatLibroView: (uri: URI) => Promise<LibroView>;
   updateDirtyStatus: (uri: URI, dirty: boolean) => void;
 }
 
-// @singleton()
 @Injectable()
 export class LibroOpensumiService extends WithEventBus {
   @Autowired(ManaContainer)
@@ -49,4 +49,10 @@ export class LibroOpensumiService extends WithEventBus {
       }),
     );
   }
+
+  libroRefreshMap: Map<string, boolean> = new Map();
+
+  refresh = (id: string) => {
+    this.libroRefreshMap.set(id, true);
+  };
 }
