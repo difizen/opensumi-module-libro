@@ -37,6 +37,9 @@ export const OpensumiLibroView = (...params) => {
         }
         libro.model.onChanged(() => {
           libroOpensumiService.updateDirtyStatus(params[0].resource.uri, true);
+          if (autoSaveHandle) {
+            window.clearTimeout(autoSaveHandle);
+          }
           autoSaveHandle = window.setTimeout(() => {
             commandRegistry
               .executeCommand(
