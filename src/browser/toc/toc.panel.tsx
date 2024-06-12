@@ -24,6 +24,25 @@ export const TocPanel = ({
   const [libroTocView, setLibroTocView] = useState<TOCView | undefined>();
 
   useEffect(() => {
+    if (
+      editorService.currentResource?.uri.path.ext ===
+      `.${LIBRO_COMPONENTS_SCHEME_ID}`
+    ) {
+      libroOpensumiService
+        .getOrCreatLibroView(editorService.currentResource.uri)
+        .then((libro) => {
+          const viewManager = manaContainer.get(ViewManager);
+          viewManager
+            .getOrCreateView<TOCView>(TOCView, {
+              id: (editorService.currentResource?.uri as URI).toString(),
+            })
+            .then((libroTocView) => {
+              libroTocView.parent = libro;
+              setLibroTocView(libroTocView);
+              return;
+            });
+        });
+    }
     editorService.onActiveResourceChange((e: any) => {
       if ((e.uri as URI).path.ext === `.${LIBRO_COMPONENTS_SCHEME_ID}`) {
         libroOpensumiService.getOrCreatLibroView(e.uri).then((libro) => {
