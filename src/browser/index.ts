@@ -3,6 +3,7 @@ import { BrowserModule } from '@opensumi/ide-core-browser';
 import { LibroCommandContribution } from './libro.command';
 import { LibroContribution } from './libro.contribution';
 import { ILibroOpensumiService, LibroOpensumiService } from './libro.service';
+import { LibroTracker } from './libro.view.tracker';
 import { TocContribution } from './toc/toc.contribution';
 export * from './kernel-panel';
 export * from './libro.color.tokens';
@@ -16,6 +17,7 @@ export class OpensumiLibroModule extends BrowserModule {
     LibroContribution,
     LibroCommandContribution,
     TocContribution,
+    LibroTracker,
     {
       token: ILibroOpensumiService,
       useClass: LibroOpensumiService,

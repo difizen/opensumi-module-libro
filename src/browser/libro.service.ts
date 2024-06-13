@@ -6,14 +6,16 @@ import {
   ResourceDecorationNeedChangeEvent,
   WorkbenchEditorService,
 } from '@opensumi/ide-editor';
+import { makeObservable } from 'mobx';
 import { ManaContainer } from '../common';
+import { LibroTracker } from './libro.view.tracker';
 
 export const ILibroOpensumiService = Symbol('ILibroOpensumiService');
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export interface ILibroOpensumiService {
   manaContainer: Container;
-  libroRefreshMap: Map<string, boolean>;
+  libroTrackerMap: Map<string, LibroTracker>;
   editorService: WorkbenchEditorService;
   getOrCreatLibroView: (uri: URI) => Promise<LibroView>;
   updateDirtyStatus: (uri: URI, dirty: boolean) => void;
@@ -26,6 +28,11 @@ export class LibroOpensumiService extends WithEventBus {
 
   @Autowired(WorkbenchEditorService)
   protected readonly editorService: WorkbenchEditorService;
+
+  constructor() {
+    super();
+    makeObservable(this);
+  }
 
   getOrCreatLibroView = async (uri: URI) => {
     const libroOption = {
@@ -50,9 +57,5 @@ export class LibroOpensumiService extends WithEventBus {
     );
   }
 
-  libroRefreshMap: Map<string, boolean> = new Map();
-
-  refresh = (id: string) => {
-    this.libroRefreshMap.set(id, true);
-  };
+  libroTrackerMap: Map<string, LibroTracker> = new Map();
 }
