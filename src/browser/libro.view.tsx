@@ -2,10 +2,12 @@ import * as React from 'react';
 
 import { DocumentCommands, LibroView } from '@difizen/libro-jupyter';
 import { CommandRegistry, Container, ViewRender } from '@difizen/mana-app';
+import { Injector, INJECTOR_TOKEN } from '@opensumi/di';
 import { URI, useInjectable } from '@opensumi/ide-core-browser';
 import { ManaContainer } from '../common';
 import styles from './libro.module.less';
 import { ILibroOpensumiService } from './libro.service';
+import { LibroTracker } from './libro.view.tracker';
 
 export const OpensumiLibroView = (...params) => {
   const libroOpensumiService = useInjectable<ILibroOpensumiService>(
@@ -13,7 +15,10 @@ export const OpensumiLibroView = (...params) => {
   );
   const manaContainer = useInjectable<Container>(ManaContainer);
   const commandRegistry = manaContainer.get(CommandRegistry);
+  const injector: Injector = useInjectable(INJECTOR_TOKEN);
+
   const [refresh, setRefresh] = React.useState<number>(Date.now());
+  const [libroTracker, setLibroTracker] = React.useState<LibroTracker>();
 
   const [libroView, setLibroView] = React.useState<LibroView | undefined>(
     undefined,
@@ -25,16 +30,12 @@ export const OpensumiLibroView = (...params) => {
       .getOrCreatLibroView(params[0].resource.uri)
       .then((libro) => {
         setLibroView(libro);
-        if (
-          libroOpensumiService.libroRefreshMap.has(
-            (params[0].resource.uri as URI).toString(),
-          )
-        ) {
-          setRefresh(Date.now());
-          libroOpensumiService.libroRefreshMap.delete(
-            (params[0].resource.uri as URI).toString(),
-          );
-        }
+        const tracker = injector.get(LibroTracker);
+        setLibroTracker(tracker);
+        libroOpensumiService.libroTrackerMap.set(
+          (params[0].resource.uri as URI).toString(),
+          tracker,
+        );
         libro.model.onChanged(() => {
           libroOpensumiService.updateDirtyStatus(params[0].resource.uri, true);
           if (autoSaveHandle) {
@@ -64,6 +65,11 @@ export const OpensumiLibroView = (...params) => {
       window.clearTimeout(autoSaveHandle);
     };
   }, []);
+
+  React.useEffect(() => {
+    if (libroTracker?.refreshTimer) setRefresh(libroTracker?.refreshTimer);
+  }, [libroTracker?.refreshTimer]);
+
   return (
     <div className={styles.libroView} key={refresh}>
       {libroView && <ViewRender view={libroView}></ViewRender>}
