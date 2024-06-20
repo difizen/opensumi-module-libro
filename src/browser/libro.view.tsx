@@ -17,7 +17,6 @@ export const OpensumiLibroView = (...params) => {
   const commandRegistry = manaContainer.get(CommandRegistry);
   const injector: Injector = useInjectable(INJECTOR_TOKEN);
 
-  const [refresh, setRefresh] = React.useState<number>(Date.now());
   const [libroTracker, setLibroTracker] = React.useState<LibroTracker>();
 
   const [libroView, setLibroView] = React.useState<LibroView | undefined>(
@@ -25,17 +24,26 @@ export const OpensumiLibroView = (...params) => {
   );
 
   React.useEffect(() => {
+    if (libroTracker?.refreshTimer) {
+      libroView?.dispose();
+    }
     let autoSaveHandle: undefined | number = undefined;
     libroOpensumiService
       .getOrCreatLibroView(params[0].resource.uri)
       .then((libro) => {
         setLibroView(libro);
-        const tracker = injector.get(LibroTracker);
-        setLibroTracker(tracker);
-        libroOpensumiService.libroTrackerMap.set(
-          (params[0].resource.uri as URI).toString(),
-          tracker,
-        );
+        if (
+          !libroOpensumiService.libroTrackerMap.has(
+            (params[0].resource.uri as URI).toString(),
+          )
+        ) {
+          const tracker = injector.get(LibroTracker);
+          setLibroTracker(tracker);
+          libroOpensumiService.libroTrackerMap.set(
+            (params[0].resource.uri as URI).toString(),
+            tracker,
+          );
+        }
         libro.model.onChanged(() => {
           libroOpensumiService.updateDirtyStatus(params[0].resource.uri, true);
           if (autoSaveHandle) {
@@ -64,14 +72,10 @@ export const OpensumiLibroView = (...params) => {
     return () => {
       window.clearTimeout(autoSaveHandle);
     };
-  }, []);
-
-  React.useEffect(() => {
-    if (libroTracker?.refreshTimer) setRefresh(libroTracker?.refreshTimer);
   }, [libroTracker?.refreshTimer]);
 
   return (
-    <div className={styles.libroView} key={refresh}>
+    <div className={styles.libroView}>
       {libroView && <ViewRender view={libroView}></ViewRender>}
     </div>
   );

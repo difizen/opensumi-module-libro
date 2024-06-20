@@ -36,7 +36,6 @@ export class LibroOpensumiService extends WithEventBus {
 
   getOrCreatLibroView = async (uri: URI) => {
     const libroOption = {
-      id: uri.toString(),
       modelId: uri.toString(),
       resource: uri.toString(),
       loadType: 'libro-opensumi-loader',
