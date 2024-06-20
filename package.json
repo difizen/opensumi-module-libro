@@ -1,6 +1,6 @@
 {
   "name": "@difizen/opensumi-module-libro",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "libro on opensumi",
   "repository": {
     "type": "git",

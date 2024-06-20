@@ -8,10 +8,10 @@ export class LibroTracker {
   }
 
   @observable
-  refreshTimer: number = Date.now();
+  refreshTimer: number | undefined = undefined;
 
   @action
-  refresh(refreshTimer: number) {
+  refresh(refreshTimer: number | undefined) {
     this.refreshTimer = refreshTimer;
   }
 }
