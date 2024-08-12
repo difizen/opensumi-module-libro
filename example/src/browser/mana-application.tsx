@@ -1,11 +1,10 @@
+import { LibroJupyterNoEditorModule } from '@difizen/libro-jupyter';
+import { LibroTOCModule } from '@difizen/libro-toc';
 import {
   GlobalContainer,
   ManaAppPreset,
   ManaComponents,
 } from '@difizen/mana-app';
-// import { LibroJupyterModule } from '@difizen/libro-jupyter';
-import { LibroJupyterModule } from '@difizen/libro-jupyter';
-import { LibroTOCModule } from '@difizen/libro-toc';
 import { SlotRenderer } from '@opensumi/ide-core-browser';
 import {
   BoxPanel,
@@ -24,7 +23,7 @@ export function CustomToolbarLayout() {
         context={{ container: manaContainer }}
         modules={[
           ManaAppPreset,
-          LibroJupyterModule,
+          LibroJupyterNoEditorModule,
           DemoLibroModule,
           LibroTOCModule,
         ]}

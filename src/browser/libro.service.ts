@@ -14,15 +14,18 @@ export const ILibroOpensumiService = Symbol('ILibroOpensumiService');
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export interface ILibroOpensumiService {
-  manaContainer: Container;
+  // manaContainer: Container;
   libroTrackerMap: Map<string, LibroTracker>;
-  editorService: WorkbenchEditorService;
+  // editorService: WorkbenchEditorService;
   getOrCreatLibroView: (uri: URI) => Promise<LibroView>;
   updateDirtyStatus: (uri: URI, dirty: boolean) => void;
 }
 
 @Injectable()
-export class LibroOpensumiService extends WithEventBus {
+export class LibroOpensumiService
+  extends WithEventBus
+  implements ILibroOpensumiService
+{
   @Autowired(ManaContainer)
   private readonly manaContainer: Container;
 

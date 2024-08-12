@@ -1,5 +1,7 @@
-import { OpensumiLibroModule } from '@difizen/opensumi-module-libro';
-import { KernelPanelModule } from '@difizen/opensumi-module-libro/browser/kernel-panel';
+import {
+  KernelPanelModule,
+  OpensumiLibroModule,
+} from '@difizen/opensumi-module-libro';
 import { ClientAddonModule } from '@opensumi/ide-addons/lib/browser';
 import { CommentsModule } from '@opensumi/ide-comments/lib/browser';
 import {
