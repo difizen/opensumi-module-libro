@@ -11,6 +11,6 @@ export default () => {
   useEffect(() => {
     startApp();
   }, []);
-  return <div id="main"></div>;
+  return <div id="main" style={{ height: '100vh' }}></div>;
 };
 ```

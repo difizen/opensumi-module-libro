@@ -2,10 +2,14 @@ import type { CodeEditorFactory } from '@difizen/libro-code-editor';
 import { CodeEditorContribution } from '@difizen/libro-code-editor';
 import { MIME } from '@difizen/libro-common';
 import { inject, singleton } from '@difizen/mana-app';
+import { Injector } from '@opensumi/di';
+import { OpensumiInjector } from '../../common';
 
+import { EditorStateFactory } from '@difizen/libro-jupyter';
 import {
   libroE2DefaultConfig,
   LibroOpensumiEditorFactory,
+  OpensumiEditorState,
   stateFactory,
 } from './opensumi-editor';
 
@@ -13,15 +17,17 @@ import {
 export class LibroE2EditorContribution implements CodeEditorContribution {
   factory: CodeEditorFactory;
 
-  stateFactory = stateFactory;
+  stateFactory: EditorStateFactory<OpensumiEditorState>;
 
   defaultConfig = libroE2DefaultConfig;
 
   constructor(
     @inject(LibroOpensumiEditorFactory)
     libroOpensumiEditorFactory: LibroOpensumiEditorFactory,
+    @inject(OpensumiInjector) injector: Injector,
   ) {
     this.factory = libroOpensumiEditorFactory;
+    this.stateFactory = stateFactory(injector);
   }
 
   // stateFactory: EditorStateFactory<any> = (options) => {

@@ -7,7 +7,7 @@ import {
   WorkbenchEditorService,
 } from '@opensumi/ide-editor';
 import { makeObservable } from 'mobx';
-import { ManaContainer } from '../common';
+import { ContentLoaderType, ManaContainer } from '../common';
 import { LibroTracker } from './libro.view.tracker';
 
 export const ILibroOpensumiService = Symbol('ILibroOpensumiService');
@@ -41,7 +41,7 @@ export class LibroOpensumiService
     const libroOption = {
       modelId: uri.toString(),
       resource: uri.toString(),
-      loadType: 'libro-opensumi-loader',
+      loadType: ContentLoaderType,
     };
     const libroService = this.manaContainer.get(LibroService);
     const libroView = await libroService.getOrCreateView(libroOption);

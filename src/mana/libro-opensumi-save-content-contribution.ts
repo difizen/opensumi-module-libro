@@ -13,7 +13,7 @@ import {
 } from '@difizen/mana-app';
 import { Injector } from '@opensumi/di';
 import { IFileServiceClient } from '@opensumi/ide-file-service';
-import { OpensumiInjector } from '../common';
+import { ContentLoaderType, OpensumiInjector } from '../common';
 
 @singleton({ contrib: ContentSaveContribution })
 export class LibroOpensumiContentSaveContribution
@@ -23,7 +23,7 @@ export class LibroOpensumiContentSaveContribution
   @inject(OpensumiInjector) injector: Injector;
 
   canHandle = (options: NotebookOption) => {
-    return options.loadType === 'libro-opensumi-loader' ? 100 : 1;
+    return options.loadType === ContentLoaderType ? 100 : 1;
   };
   saveContent = async (options: NotebookOption, model: LibroJupyterModel) => {
     const uri = new URI(options.resource.toString());

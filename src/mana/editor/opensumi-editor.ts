@@ -34,16 +34,15 @@ import {
   watch,
 } from '@difizen/mana-app';
 import { Injector } from '@opensumi/di';
+import { IEventBus, URI } from '@opensumi/ide-core-common';
 import {
   EditorCollectionService,
   ICodeEditor as IOpensumiEditor,
+  IEditorDocumentModelRef,
 } from '@opensumi/ide-editor';
+import { IEditorDocumentModelService } from '@opensumi/ide-editor/lib/browser/doc-model/types';
 import * as monacoTypes from '@opensumi/ide-monaco';
-import {
-  monaco,
-  URI as MonacoURI,
-} from '@opensumi/ide-monaco/lib/browser/monaco-api';
-import type { ICodeEditor as IMonacoCodeEditor } from '@opensumi/ide-monaco/lib/browser/monaco-api/types';
+import { ICodeEditor as IMonacoCodeEditor } from '@opensumi/ide-monaco/lib/browser/monaco-api/types';
 import { Selection } from '@opensumi/monaco-editor-core';
 import { Range as MonacoRange } from '@opensumi/monaco-editor-core/esm/vs/editor/common/core/range';
 import type { IStandaloneEditorConstructionOptions as MonacoEditorOptions } from '@opensumi/monaco-editor-core/esm/vs/editor/standalone/browser/standaloneCodeEditor';
@@ -287,29 +286,35 @@ export type LibroOpensumiEditorFactory = CodeEditorFactory;
 
 export const OpensumiEditorClassname = 'libro-opensumi-editor';
 
-type OpensumiEditorState = monacoTypes.editor.ITextModel | null;
+export type OpensumiEditorState = IEditorDocumentModelRef | null;
 export const LibroOpensumiEditorState = Symbol('LibroOpensumiEditorState');
 export type LibroOpensumiEditorState = EditorState<OpensumiEditorState>;
 
-export const stateFactory: EditorStateFactory<OpensumiEditorState> = (
-  options: IEditorStateOptions,
-) => {
-  const uri = MonacoURI.parse(options.uuid);
-  const monacoModel = monaco.editor.createModel(
-    options.model.value,
-    'python',
-    uri,
-  );
-  return {
-    toJSON: () => {
-      return {};
-    },
-    dispose: () => {
-      monacoModel.dispose();
-    },
-    state: monacoModel,
+export const stateFactory: (
+  injector: Injector,
+) => EditorStateFactory<OpensumiEditorState> =
+  (injector) => (options: IEditorStateOptions) => {
+    // const uri = Uri.parse(options.uuid);
+    // const monacoModel = monaco.editor.createModel(
+    //   options.model.value,
+    //   'python',
+    //   uri,
+    // );
+    const docModelService: IEditorDocumentModelService = injector.get(
+      IEditorDocumentModelService,
+    );
+    const uri = URI.parse(options.uuid);
+    const modeRef = getOrigin(docModelService).getModelReference(uri);
+    return {
+      toJSON: () => {
+        return {};
+      },
+      dispose: () => {
+        modeRef?.instance.getMonacoModel()?.dispose();
+      },
+      state: modeRef,
+    };
   };
-};
 
 @transient()
 export class LibroOpensumiEditor implements IEditor {
@@ -369,7 +374,7 @@ export class LibroOpensumiEditor implements IEditor {
   }
 
   get monacoEditor(): IMonacoCodeEditor | undefined {
-    return this?._editor?.monacoEditor;
+    return getOrigin(this?._editor)?.monacoEditor;
   }
 
   get lineCount(): number {
@@ -388,6 +393,10 @@ export class LibroOpensumiEditor implements IEditor {
   protected isLayouting = false;
 
   protected hasHorizontalScrollbar = false;
+
+  get eventbus() {
+    return this.injector.get(IEventBus);
+  }
 
   constructor(
     @inject(LibroE2EditorOptions) options: LibroE2EditorOptions,
@@ -507,26 +516,37 @@ export class LibroOpensumiEditor implements IEditor {
     };
     this._config = editorConfig;
 
-    const model = this.editorState.state;
+    let modelRef = getOrigin(this.editorState.state);
 
     const options: MonacoEditorOptions = {
       ...this.toMonacoOptions(editorConfig),
       // theme: this.theme,
-      model: getOrigin(model),
+      // model: getOrigin(model),
     };
 
-    // this._editor = editorPorvider.create(host, options);
     const editorCollectionService: EditorCollectionService = this.injector.get(
       EditorCollectionService,
     );
+
+    if (!modelRef) {
+      const docModelService: IEditorDocumentModelService = this.injector.get(
+        IEditorDocumentModelService,
+      );
+      const uri = URI.parse(this._uuid);
+      modelRef = await getOrigin(docModelService).createModelReference(
+        uri,
+        'libro-opensumi-editor',
+      );
+    }
     this._editor = getOrigin(editorCollectionService).createCodeEditor(
       host,
       options,
     );
 
-    // this._editor.monacoEditor.setModel(this.getState().state)
+    getOrigin(this._editor).open(modelRef);
+
     this.toDispose.push(
-      this.monacoEditor?.onDidChangeModelContent((e) => {
+      modelRef.instance.getMonacoModel()?.onDidChangeContent((e) => {
         const value = this.monacoEditor?.getValue();
         this.model.value = value ?? '';
         this.onModelContentChangedEmitter.fire(

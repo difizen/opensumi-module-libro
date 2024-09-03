@@ -17,7 +17,7 @@ module.exports = {
     path: distDir,
   },
   devtool: false,
-  mode: 'production',
+  mode: 'development',
   node: false,
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.mjs', '.json', '.less'],

@@ -177,10 +177,10 @@
         "version": "2024.40.0"
       }
     ],
-    "ms-pyright": [
+    "ryannz": [
       {
-        "name": "pyright",
-        "version": "1.1.372"
+        "name": "pylez",
+        "version": "1.0.3"
       }
     ]
   }

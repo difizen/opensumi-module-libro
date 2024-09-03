@@ -4,11 +4,14 @@ import {
   CommandContribution,
   CommandRegistry,
   Domain,
+  IOpenerService,
+  OpenerContribution,
   Schemes,
   StorageProvider,
   URI,
 } from '@opensumi/ide-core-browser';
 import { ClientAppContribution } from '@opensumi/ide-core-browser/lib/common';
+import { IEditorDocumentModelContentRegistry } from '@opensumi/ide-editor/lib/browser/doc-model/types';
 import {
   BrowserEditorContribution,
   EditorComponentRegistry,
@@ -20,23 +23,30 @@ import { IconService } from '@opensumi/ide-theme/lib/browser';
 import { IconType, IThemeService } from '@opensumi/ide-theme/lib/common';
 import { IWorkspaceService } from '@opensumi/ide-workspace/lib/common';
 import { ManaContainer } from '../common';
+import { LibroOpener } from './libro-opener';
 import {
   LIBRO_COMPONENTS_ID,
   LIBRO_COMPONENTS_SCHEME_ID,
 } from './libro.protocol';
 import { OpensumiLibroView } from './libro.view';
+import { NotebookDocumentContentProvider } from './notebook-document-content-provider';
 
 const LIBRO_COMPONENTS_VIEW_COMMAND = {
   id: 'opensumi-libro',
 };
 
-@Domain(BrowserEditorContribution, ClientAppContribution, CommandContribution)
-// export class LibroContribution implements ClientAppContribution, CommandContribution {
+@Domain(
+  BrowserEditorContribution,
+  ClientAppContribution,
+  CommandContribution,
+  OpenerContribution,
+)
 export class LibroContribution
   implements
     ClientAppContribution,
     BrowserEditorContribution,
-    CommandContribution
+    CommandContribution,
+    OpenerContribution
 {
   @Autowired(IWorkspaceService)
   protected readonly workspaceService: IWorkspaceService;
@@ -55,6 +65,15 @@ export class LibroContribution
 
   @Autowired(IThemeService)
   protected readonly themeService: IThemeService;
+
+  @Autowired(NotebookDocumentContentProvider)
+  protected readonly notebookDocumentContentProvider: NotebookDocumentContentProvider;
+  @Autowired(LibroOpener)
+  protected readonly libroOpener: LibroOpener;
+
+  registerOpener(registry: IOpenerService): void {
+    throw registry.registerOpener(this.libroOpener);
+  }
 
   registerCommands(registry: CommandRegistry) {
     registry.registerCommand(LIBRO_COMPONENTS_VIEW_COMMAND, {
@@ -103,6 +122,14 @@ export class LibroContribution
         };
       },
     });
+  }
+
+  registerEditorDocumentModelContentProvider(
+    registry: IEditorDocumentModelContentRegistry,
+  ) {
+    registry.registerEditorDocumentModelContentProvider(
+      this.notebookDocumentContentProvider,
+    );
   }
 
   async onDidStart() {
