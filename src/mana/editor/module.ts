@@ -12,27 +12,18 @@ import {
 } from './opensumi-editor';
 
 export const LibroOpensumiEditorModule = ManaModule.create()
-  .register(
-    LibroE2EditorContribution,
-    LibroOpensumiEditor,
-    // LanguageSpecRegistry,
-    // LibroLanguageSpecs,
-    // LibroSQLRequestAPI,
-    Keybindhandler,
-    {
-      token: LibroOpensumiEditorFactory,
-      useFactory: (ctx) => {
-        return (options: IEditorOptions, editorState: EditorState) => {
-          const child = ctx.container.createChild();
-          child.register({ token: LibroE2EditorOptions, useValue: options });
-          child.register({
-            token: LibroOpensumiEditorState,
-            useValue: editorState,
-          });
-          return child.get(LibroOpensumiEditor);
-        };
-      },
+  .register(LibroE2EditorContribution, LibroOpensumiEditor, Keybindhandler, {
+    token: LibroOpensumiEditorFactory,
+    useFactory: (ctx) => {
+      return (options: IEditorOptions, editorState: EditorState) => {
+        const child = ctx.container.createChild();
+        child.register({ token: LibroE2EditorOptions, useValue: options });
+        child.register({
+          token: LibroOpensumiEditorState,
+          useValue: editorState,
+        });
+        return child.get(LibroOpensumiEditor);
+      };
     },
-  )
-  // .contribution(LanguageSpecContribution)
+  })
   .dependOn(CodeEditorModule);

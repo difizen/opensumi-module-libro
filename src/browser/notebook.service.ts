@@ -1,6 +1,6 @@
 import {
+  CellUri,
   CellView,
-  getCellURI,
   LibroJupyterView,
   LibroService,
   LibroView,
@@ -22,7 +22,7 @@ import { IEditorDocumentModelService } from '@opensumi/ide-editor/lib/browser/do
 import { NotebookService } from '@opensumi/ide-editor/lib/browser/notebook.service';
 import { ManaContainer } from '../common';
 import { LIBRO_COMPONENTS_SCHEME_ID } from './libro.protocol';
-import { LibroOpensumiService } from './libro.service';
+import { ILibroOpensumiService } from './libro.service';
 
 @Injectable()
 @Domain(ClientAppContribution)
@@ -36,8 +36,8 @@ export class NotebookServiceOverride
   private readonly editorModelService: IEditorDocumentModelService;
   @Autowired(WorkbenchEditorService)
   private readonly workbenchEditorService: WorkbenchEditorService;
-  @Autowired(LibroOpensumiService)
-  private readonly libroOpensumiService: LibroOpensumiService;
+  @Autowired(ILibroOpensumiService)
+  private readonly libroOpensumiService: ILibroOpensumiService;
 
   onDidStart(): MaybePromise<void> {
     this.listenLibro();
@@ -86,12 +86,7 @@ export class NotebookServiceOverride
   }
 
   getCellURI(cell: CellView) {
-    return getCellURI(
-      cell.parent instanceof LibroJupyterView
-        ? cell.parent.model.filePath
-        : cell.parent.id,
-      cell.model.id,
-    );
+    return CellUri.from(cell.parent.model.id, cell.model.id);
   }
 
   getCellModelRef(cell: CellView) {
@@ -101,18 +96,13 @@ export class NotebookServiceOverride
   }
 
   asNotebookCell(cell: CellView): NotebookCellDto {
-    // const modelRef = this.getCellModelRef(cell);
-    // const model = modelRef?.instance.getMonacoModel();
-    // if (!model) {
-    //   throw Error('cell have no editor model');
-    // }
     return {
       cellKind: this.isCodeCell(cell.model.mimeType)
         ? CellKind.Code
         : CellKind.Markup,
       eol: '\n',
       handle: 1,
-      language: this.isCodeCell(cell.model.mimeType) ? 'python' : 'markdown',
+      language: this.libroOpensumiService.getCellLangauge(cell) ?? 'plaintext',
       mime: cell.model.mimeType,
       outputs: [],
       source: cell.model.value.split('\n'),

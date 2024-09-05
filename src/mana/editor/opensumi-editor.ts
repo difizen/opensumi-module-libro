@@ -229,11 +229,6 @@ export interface LibroE2EditorOptions extends IEditorOptions {
 
 export const libroE2DefaultConfig: Required<LibroE2EditorConfig> = {
   ...defaultConfig,
-  theme: {
-    dark: 'libro-dark',
-    light: 'libro-light',
-    hc: 'e2-hc',
-  },
   scrollBarHeight: 12,
   mode: 'null',
   mimetype: MIME.python,
@@ -255,7 +250,6 @@ export const libroE2DefaultConfig: Required<LibroE2EditorConfig> = {
   selectionPointer: false,
   handlePaste: true,
   lineWrap: 'off',
-  lspEnabled: true,
 
   //
   highlightActiveLineGutter: false,
@@ -294,12 +288,6 @@ export const stateFactory: (
   injector: Injector,
 ) => EditorStateFactory<OpensumiEditorState> =
   (injector) => (options: IEditorStateOptions) => {
-    // const uri = Uri.parse(options.uuid);
-    // const monacoModel = monaco.editor.createModel(
-    //   options.model.value,
-    //   'python',
-    //   uri,
-    // );
     const docModelService: IEditorDocumentModelService = injector.get(
       IEditorDocumentModelService,
     );

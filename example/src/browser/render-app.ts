@@ -3,12 +3,10 @@ import {
   initLibroColorToken,
   initLibroOpensumi,
   initTocPanelColorToken,
-  NotebookServiceOverride,
 } from '@difizen/opensumi-module-libro';
 import { Injector } from '@opensumi/di';
 import { IClientAppOpts, path } from '@opensumi/ide-core-browser';
 import { ClientApp } from '@opensumi/ide-core-browser/lib/bootstrap/app';
-import { INotebookService } from '@opensumi/ide-editor';
 import { manaContainer } from './mana-application';
 import { StatusBarContribution } from './status-bar/status-bar.contribution';
 
@@ -23,10 +21,6 @@ export async function renderApp(opts: IClientAppOpts) {
   const injector = new Injector();
   initLibroOpensumi(injector, manaContainer);
   injector.addProviders(StatusBarContribution);
-  injector.overrideProviders({
-    token: INotebookService,
-    useClass: NotebookServiceOverride,
-  });
   const hostname = window.location.hostname;
   // const query = new URLSearchParams(window.location.search);
   // 线上的静态服务和 IDE 后端是一个 Server

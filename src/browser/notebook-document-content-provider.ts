@@ -43,21 +43,11 @@ export class NotebookDocumentContentProvider
   //   throw new Error("Method not implemented.");
   // }
 
-  protected async getCellViewByUri(uri: URI) {
-    const notebookUri = URI.file(uri.path.toString());
-    const cellid = uri.getParsedQuery()['cellid'];
-    const libroView = await this.libroOpensumiService.getOrCreatLibroView(
-      notebookUri,
-    );
-    const cell = libroView.model.cells.find((cell) => cell.model.id === cellid);
-    return cell;
-  }
-
   async provideEditorDocumentModelContent(
     uri: URI,
     encoding?: string | undefined,
   ): Promise<string> {
-    const cell = await this.getCellViewByUri(uri);
+    const cell = await this.libroOpensumiService.getCellViewByUri(uri);
     return cell?.model.value ?? '';
   }
   isReadonly(uri: URI): MaybePromise<boolean> {
@@ -76,8 +66,12 @@ export class NotebookDocumentContentProvider
       state: SaveTaskResponseState.SUCCESS,
     };
   }
-  preferLanguageForUri?(uri: URI): MaybePromise<string | undefined> {
-    return 'python';
+  async preferLanguageForUri?(uri: URI): Promise<string | undefined> {
+    const cell = await this.libroOpensumiService.getCellViewByUri(uri);
+    if (!cell) {
+      return;
+    }
+    return this.libroOpensumiService.getCellLangauge(cell);
   }
   // async provideEOL?(uri: URI): Promise<EOL> {
   //   return '\n'

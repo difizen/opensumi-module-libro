@@ -3,9 +3,9 @@ import {
   IRange as LibroRange,
 } from '@difizen/libro-code-editor';
 import {
+  CellUri,
   EditorCellView,
   ExecutableNotebookModel,
-  getCellURI,
 } from '@difizen/libro-jupyter';
 import { Autowired, Injectable } from '@opensumi/di';
 import { IOpener, IPosition, IRange, URI } from '@opensumi/ide-core-browser';
@@ -82,7 +82,7 @@ export class LibroOpener implements IOpener {
     const cell = libroView.model.cells.find((item) => {
       return (
         ExecutableNotebookModel.is(libroView.model) &&
-        getCellURI(libroView.model.filePath, item.model.id).toString() ===
+        CellUri.from(libroView.model.filePath, item.model.id).toString() ===
           decodeURIComponent(uri.toString())
       );
     });

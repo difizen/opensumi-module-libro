@@ -54,6 +54,7 @@ export class LibroOpensumiContentContribution implements ContentContribution {
       };
       model.currentFileContents = currentFileContents;
       model.filePath = currentFileContents.path;
+      model.id = currentFileContents.path; //
       model.lastModified = model.currentFileContents.last_modified;
       if (model.executable) {
         model.startKernelConnection();
