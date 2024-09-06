@@ -1,6 +1,7 @@
 import { Injectable, Provider } from '@opensumi/di';
 import { BrowserModule } from '@opensumi/ide-core-browser';
 import { INotebookService } from '@opensumi/ide-editor';
+import { LibroKeybindContribition } from './libro-keybind-contribution';
 import { LibroOpener } from './libro-opener';
 import { LibroCommandContribution } from './libro.command';
 import { LibroContribution } from './libro.contribution';
@@ -26,6 +27,7 @@ export class OpensumiLibroModule extends BrowserModule {
     LibroTracker,
     NotebookDocumentContentProvider,
     LibroOpener,
+    LibroKeybindContribition,
     {
       token: ILibroOpensumiService,
       useClass: LibroOpensumiService,

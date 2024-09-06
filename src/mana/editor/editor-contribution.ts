@@ -9,7 +9,7 @@ import { OpensumiInjector } from '../../common';
 
 import { EditorStateFactory } from '@difizen/libro-jupyter';
 import {
-  libroE2DefaultConfig,
+  libroOpensumiEditorDefaultConfig,
   LibroOpensumiEditorFactory,
   OpensumiEditorState,
   stateFactory,
@@ -24,7 +24,7 @@ export class LibroE2EditorContribution implements CodeEditorContribution {
 
   stateFactory: EditorStateFactory<OpensumiEditorState>;
 
-  defaultConfig = libroE2DefaultConfig;
+  defaultConfig = libroOpensumiEditorDefaultConfig;
 
   constructor(
     @inject(LibroOpensumiEditorFactory)
@@ -37,12 +37,7 @@ export class LibroE2EditorContribution implements CodeEditorContribution {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   canHandle(mime: string): number {
-    // 只要注册过能拿到language就认为可以打开
-    // const hasSupport = getOrigin(this.languageSpecRegistry.languageSpecs).findIndex(item => item.mime === mime) > 0
-    const hasSupport = true;
-    if (hasSupport) {
-      return 50 + 2;
-    }
-    return 0;
+    // 代码编辑都使用opensumi编辑器
+    return 50 + 2;
   }
 }

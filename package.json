@@ -1,6 +1,6 @@
 {
   "name": "@difizen/opensumi-module-libro",
-  "version": "0.0.13",
+  "version": "0.1.0",
   "description": "libro on opensumi",
   "repository": {
     "type": "git",
@@ -14,7 +14,7 @@
     },
     "./package.json": "./package.json"
   },
-  "main": "lib/index.js",
+  "main": "es/index.js",
   "module": "es/index.js",
   "typings": "es/index.d.ts",
   "files": [

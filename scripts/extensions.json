@@ -91,6 +91,14 @@
         "version": "1.60.0"
       },
       {
+        "name": "markdown",
+        "version": "1.88.1"
+      },
+      {
+        "name": "markdown-language-features",
+        "version": "1.88.1"
+      },
+      {
         "name": "xml",
         "version": "1.55.2"
       },
