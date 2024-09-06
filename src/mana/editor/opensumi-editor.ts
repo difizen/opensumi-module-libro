@@ -178,42 +178,6 @@ export interface LibroE2EditorConfig extends IEditorConfig {
    * in which case the "default" (arrow) cursor will be used.
    */
   selectionPointer?: boolean | string;
-
-  //
-  highlightActiveLineGutter?: boolean;
-  highlightSpecialChars?: boolean;
-  history?: boolean;
-  drawSelection?: boolean;
-  dropCursor?: boolean;
-  allowMultipleSelections?: boolean;
-  autocompletion?: boolean;
-  rectangularSelection?: boolean;
-  crosshairCursor?: boolean;
-  highlightSelectionMatches?: boolean;
-  foldGutter?: boolean;
-  syntaxHighlighting?: boolean;
-  /**
-   * 是否从kernel获取completion
-   */
-  jupyterKernelCompletion?: boolean;
-  /**
-   * 是否从kernel获取tooltip
-   */
-  jupyterKernelTooltip?: boolean;
-  indentationMarkers?: boolean;
-  hyperLink?: boolean;
-  /**
-   * 是否开启tab触发completion和tooltip
-   */
-  tabEditorFunction?: boolean;
-
-  lspCompletion?: boolean;
-
-  lspTooltip?: boolean;
-
-  lspLint?: boolean;
-
-  placeholder?: HTMLElement | string;
 }
 
 export const LibroE2EditorOptions = Symbol('LibroE2EditorOptions');
@@ -250,29 +214,6 @@ export const libroE2DefaultConfig: Required<LibroE2EditorConfig> = {
   selectionPointer: false,
   handlePaste: true,
   lineWrap: 'off',
-
-  //
-  highlightActiveLineGutter: false,
-  highlightSpecialChars: true,
-  history: true,
-  drawSelection: true,
-  dropCursor: true,
-  allowMultipleSelections: true,
-  autocompletion: true,
-  rectangularSelection: true,
-  crosshairCursor: true,
-  highlightSelectionMatches: true,
-  foldGutter: true,
-  syntaxHighlighting: true,
-  jupyterKernelCompletion: true,
-  indentationMarkers: true,
-  hyperLink: true,
-  jupyterKernelTooltip: true,
-  tabEditorFunction: true,
-  lspCompletion: true,
-  lspTooltip: true,
-  lspLint: true,
-  placeholder: '',
 };
 
 export const LibroOpensumiEditorFactory = Symbol('LibroOpensumiEditorFactory');
@@ -441,50 +382,41 @@ export class LibroOpensumiEditor implements IEditor {
         enabled: false,
       },
       lineHeight: editorConfig.lineHeight ?? this.defaultLineHeight,
-      fontSize: editorConfig.fontSize ?? 13,
+      // fontSize: editorConfig.fontSize ?? 13,
       lineNumbers: editorConfig.lineNumbers ? 'on' : 'off',
-      folding: editorConfig.codeFolding,
+      // folding: editorConfig.codeFolding,
       wordWrap: editorConfig.lineWrap,
-      lineDecorationsWidth: 15,
-      lineNumbersMinChars: 3,
-      suggestSelection: 'first',
-      wordBasedSuggestions: 'off',
+      // lineDecorationsWidth: 15,
+      // lineNumbersMinChars: 3,
+      // suggestSelection: 'first',
+      // wordBasedSuggestions: 'off',
       scrollBeyondLastLine: false,
-      /**
-       * 使用该选项可以让modal widget出现在正确的范围，而不是被遮挡,解决z-index问题,但是会导致hover组件之类的无法被选中
-       * 根据 https://github.com/microsoft/monaco-editor/issues/2156，0.34.x 版本修复了这个问题
-       * TODO: 当前0.31.1 无法开启此选项，升级 E2 3.x 可以解决（monaco 0.39）
-       *
-       * ```html
-       * <div id="monaco-editor-overflow-widgets-root" class="monaco-editor" style="z-index: 999;"></div>
-       * ```
-       *
-       */
       // overflowWidgetsDomNode: document.getElementById('monaco-editor-overflow-widgets-root')!,
       fixedOverflowWidgets: true,
-      suggest: { snippetsPreventQuickSuggestions: false },
-      autoClosingQuotes: editorConfig.autoClosingBrackets ? 'always' : 'never',
-      autoDetectHighContrast: false,
+      // suggest: { snippetsPreventQuickSuggestions: false },
+      // autoClosingQuotes: editorConfig.autoClosingBrackets ? 'always' : 'never',
+      // autoDetectHighContrast: false,
       scrollbar: {
         alwaysConsumeMouseWheel: false,
         verticalScrollbarSize: 0,
       },
+      glyphMargin: false,
       extraEditorClassName: OpensumiEditorClassname,
-      renderLineHighlight: 'all',
-      renderLineHighlightOnlyWhenFocus: true,
+      // renderLineHighlight: 'all',
+      // renderLineHighlightOnlyWhenFocus: true,
       readOnly: editorConfig.readOnly,
-      cursorWidth: 1,
-      tabSize: editorConfig.tabSize,
-      insertSpaces: editorConfig.insertSpaces,
-      matchBrackets: editorConfig.matchBrackets ? 'always' : 'never',
-      rulers: editorConfig.rulers,
-      wordWrapColumn: editorConfig.wordWrapColumn,
-      'semanticHighlighting.enabled': true,
+      // cursorWidth: 1,
+      // tabSize: editorConfig.tabSize,
+      // insertSpaces: editorConfig.insertSpaces,
+      // matchBrackets: editorConfig.matchBrackets ? 'always' : 'never',
+      // rulers: editorConfig.rulers,
+      // wordWrapColumn: editorConfig.wordWrapColumn,
+      // 'semanticHighlighting.enabled': true,
       maxTokenizationLineLength: 10000,
-      // wrappingStrategy: 'advanced',
-      hover: {
-        enabled: true,
-      },
+      wrappingStrategy: 'advanced',
+      // hover: {
+      //   enabled: true,
+      // },
     };
   }
 
@@ -508,8 +440,6 @@ export class LibroOpensumiEditor implements IEditor {
 
     const options: MonacoEditorOptions = {
       ...this.toMonacoOptions(editorConfig),
-      // theme: this.theme,
-      // model: getOrigin(model),
     };
 
     const editorCollectionService: EditorCollectionService = this.injector.get(
