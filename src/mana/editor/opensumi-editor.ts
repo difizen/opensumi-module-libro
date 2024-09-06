@@ -51,7 +51,7 @@ import { v4 } from 'uuid';
 import { OpensumiInjector } from '../../common';
 import './index.less';
 
-export interface LibroE2EditorConfig extends IEditorConfig {
+export interface LibroOpensumiEditorConfig extends IEditorConfig {
   /**
    * The mode to use.
    */
@@ -180,41 +180,42 @@ export interface LibroE2EditorConfig extends IEditorConfig {
   selectionPointer?: boolean | string;
 }
 
-export const LibroE2EditorOptions = Symbol('LibroE2EditorOptions');
+export const LibroOpensumiEditorOptions = Symbol('LibroOpensumiEditorOptions');
 
-export interface LibroE2EditorOptions extends IEditorOptions {
+export interface LibroOpensumiEditorOptions extends IEditorOptions {
   lspProvider?: LSPProvider;
 
   /**
    * The configuration options for the editor.
    */
-  config?: Partial<LibroE2EditorConfig>;
+  config?: Partial<LibroOpensumiEditorConfig>;
 }
 
-export const libroE2DefaultConfig: Required<LibroE2EditorConfig> = {
-  ...defaultConfig,
-  scrollBarHeight: 12,
-  mode: 'null',
-  mimetype: MIME.python,
-  smartIndent: true,
-  electricChars: true,
-  keyMap: 'default',
-  // extraKeys: null,
-  gutters: [],
-  fixedGutter: true,
-  showCursorWhenSelecting: false,
-  coverGutterNextToScrollbar: false,
-  dragDrop: true,
-  lineSeparator: null,
-  scrollbarStyle: 'native',
-  lineWiseCopyCut: true,
-  scrollPastEnd: false,
-  styleActiveLine: false,
-  styleSelectedText: true,
-  selectionPointer: false,
-  handlePaste: true,
-  lineWrap: 'off',
-};
+export const libroOpensumiEditorDefaultConfig: Required<LibroOpensumiEditorConfig> =
+  {
+    ...defaultConfig,
+    scrollBarHeight: 12,
+    mode: 'null',
+    mimetype: MIME.python,
+    smartIndent: true,
+    electricChars: true,
+    keyMap: 'default',
+    // extraKeys: null,
+    gutters: [],
+    fixedGutter: true,
+    showCursorWhenSelecting: false,
+    coverGutterNextToScrollbar: false,
+    dragDrop: true,
+    lineSeparator: null,
+    scrollbarStyle: 'native',
+    lineWiseCopyCut: true,
+    scrollPastEnd: false,
+    styleActiveLine: false,
+    styleSelectedText: true,
+    selectionPointer: false,
+    handlePaste: true,
+    lineWrap: 'off',
+  };
 
 export const LibroOpensumiEditorFactory = Symbol('LibroOpensumiEditorFactory');
 export type LibroOpensumiEditorFactory = CodeEditorFactory;
@@ -270,7 +271,7 @@ export class LibroOpensumiEditor implements IEditor {
 
   protected oldDeltaDecorations: string[] = [];
 
-  protected _config: LibroE2EditorConfig;
+  protected _config: LibroOpensumiEditorConfig;
 
   private intersectionObserver: IntersectionObserver;
 
@@ -328,7 +329,7 @@ export class LibroOpensumiEditor implements IEditor {
   }
 
   constructor(
-    @inject(LibroE2EditorOptions) options: LibroE2EditorOptions,
+    @inject(LibroOpensumiEditorOptions) options: LibroOpensumiEditorOptions,
     @inject(LibroOpensumiEditorState) state: LibroOpensumiEditorState,
     @inject(ThemeService) themeService: ThemeService,
     @inject(OpensumiInjector) injector: Injector,
@@ -343,7 +344,7 @@ export class LibroOpensumiEditor implements IEditor {
 
     const config = options.config || {};
     const fullConfig = (this._config = {
-      ...libroE2DefaultConfig,
+      ...libroOpensumiEditorDefaultConfig,
       ...config,
       mimetype: options.model.mimeType,
     });
@@ -375,7 +376,7 @@ export class LibroOpensumiEditor implements IEditor {
   }
 
   protected toMonacoOptions(
-    editorConfig: Partial<LibroE2EditorConfig>,
+    editorConfig: Partial<LibroOpensumiEditorConfig>,
   ): MonacoEditorOptions {
     return {
       minimap: {
@@ -383,9 +384,15 @@ export class LibroOpensumiEditor implements IEditor {
       },
       lineHeight: editorConfig.lineHeight ?? this.defaultLineHeight,
       // fontSize: editorConfig.fontSize ?? 13,
+      // fontSize: editorConfig.fontSize ?? 13,
       lineNumbers: editorConfig.lineNumbers ? 'on' : 'off',
       // folding: editorConfig.codeFolding,
+      // folding: editorConfig.codeFolding,
       wordWrap: editorConfig.lineWrap,
+      // lineDecorationsWidth: 15,
+      // lineNumbersMinChars: 3,
+      // suggestSelection: 'first',
+      // wordBasedSuggestions: 'off',
       // lineDecorationsWidth: 15,
       // lineNumbersMinChars: 3,
       // suggestSelection: 'first',
@@ -396,12 +403,18 @@ export class LibroOpensumiEditor implements IEditor {
       // suggest: { snippetsPreventQuickSuggestions: false },
       // autoClosingQuotes: editorConfig.autoClosingBrackets ? 'always' : 'never',
       // autoDetectHighContrast: false,
+      // suggest: { snippetsPreventQuickSuggestions: false },
+      // autoClosingQuotes: editorConfig.autoClosingBrackets ? 'always' : 'never',
+      // autoDetectHighContrast: false,
       scrollbar: {
         alwaysConsumeMouseWheel: false,
         verticalScrollbarSize: 0,
       },
       glyphMargin: false,
+      glyphMargin: false,
       extraEditorClassName: OpensumiEditorClassname,
+      // renderLineHighlight: 'all',
+      // renderLineHighlightOnlyWhenFocus: true,
       // renderLineHighlight: 'all',
       // renderLineHighlightOnlyWhenFocus: true,
       readOnly: editorConfig.readOnly,
@@ -412,7 +425,18 @@ export class LibroOpensumiEditor implements IEditor {
       // rulers: editorConfig.rulers,
       // wordWrapColumn: editorConfig.wordWrapColumn,
       // 'semanticHighlighting.enabled': true,
+      // cursorWidth: 1,
+      // tabSize: editorConfig.tabSize,
+      // insertSpaces: editorConfig.insertSpaces,
+      // matchBrackets: editorConfig.matchBrackets ? 'always' : 'never',
+      // rulers: editorConfig.rulers,
+      // wordWrapColumn: editorConfig.wordWrapColumn,
+      // 'semanticHighlighting.enabled': true,
       maxTokenizationLineLength: 10000,
+      wrappingStrategy: 'advanced',
+      // hover: {
+      //   enabled: true,
+      // },
       wrappingStrategy: 'advanced',
       // hover: {
       //   enabled: true,
@@ -430,8 +454,11 @@ export class LibroOpensumiEditor implements IEditor {
     };
   }
 
-  protected async createEditor(host: HTMLElement, config: LibroE2EditorConfig) {
-    const editorConfig: LibroE2EditorConfig = {
+  protected async createEditor(
+    host: HTMLElement,
+    config: LibroOpensumiEditorConfig,
+  ) {
+    const editorConfig: LibroOpensumiEditorConfig = {
       ...config,
     };
     this._config = editorConfig;
@@ -586,7 +613,7 @@ export class LibroOpensumiEditor implements IEditor {
     }
   }
 
-  getOption<K extends keyof LibroE2EditorConfig>(option: K) {
+  getOption<K extends keyof LibroOpensumiEditorConfig>(option: K) {
     return this._config[option];
   }
 
@@ -595,9 +622,9 @@ export class LibroOpensumiEditor implements IEditor {
    * @param option
    * @param value
    */
-  setOption = <K extends keyof LibroE2EditorConfig>(
+  setOption = <K extends keyof LibroOpensumiEditorConfig>(
     option: K,
-    value: LibroE2EditorConfig[K],
+    value: LibroOpensumiEditorConfig[K],
   ) => {
     if (value === null || value === undefined) {
       return;
@@ -616,12 +643,6 @@ export class LibroOpensumiEditor implements IEditor {
     //   >;
     //   this.placeholder.update(value as NonNullable<LibroE2EditorConfig['placeholder']>);
     // }
-
-    if (option === 'lspEnabled') {
-      this._config.lspEnabled = value as NonNullable<
-        LibroE2EditorConfig['lspEnabled']
-      >;
-    }
 
     const sizeKeys = [
       'fontFamily',
