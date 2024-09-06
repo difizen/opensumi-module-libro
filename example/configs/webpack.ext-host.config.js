@@ -2,6 +2,7 @@ const path = require('path');
 
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
+const exthostDir = path.join(__dirname, '..', 'src', 'extension');
 const tsConfigPath = path.join(__dirname, '..', '..', 'tsconfig.json');
 const distDir = path.join(__dirname, '../hosted');
 
@@ -9,14 +10,14 @@ const distDir = path.join(__dirname, '../hosted');
  * @type {import('webpack').Configuration}
  */
 module.exports = {
-  entry: require.resolve('@opensumi/ide-extension/lib/hosted/ext.process.js'),
+  entry: path.join(exthostDir, './ext-host.js'),
   target: 'node',
   output: {
     filename: 'ext.process.js',
     path: distDir,
   },
   devtool: false,
-  mode: 'production',
+  mode: 'development',
   node: false,
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.mjs', '.json', '.less'],

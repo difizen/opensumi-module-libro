@@ -19,10 +19,6 @@
         "version": "1.55.2"
       },
       {
-        "name": "docker",
-        "version": "1.55.2"
-      },
-      {
         "name": "emmet",
         "version": "1.55.2"
       },
@@ -71,7 +67,15 @@
         "version": "1.55.2"
       },
       {
+        "name": "merge-conflict",
+        "version": "1.55.2"
+      },
+      {
         "name": "python",
+        "version": "1.55.2"
+      },
+      {
+        "name": "rust",
         "version": "1.55.2"
       },
       {
@@ -79,8 +83,82 @@
         "version": "1.55.2"
       },
       {
+        "name": "search-result",
+        "version": "1.55.2"
+      },
+      {
         "name": "typescript",
         "version": "1.60.0"
+      },
+      {
+        "name": "markdown",
+        "version": "1.88.1"
+      },
+      {
+        "name": "markdown-language-features",
+        "version": "1.88.1"
+      },
+      {
+        "name": "xml",
+        "version": "1.55.2"
+      },
+      {
+        "name": "yaml",
+        "version": "1.55.2"
+      },
+      {
+        "name": "theme-abyss",
+        "version": "1.55.2"
+      },
+      {
+        "name": "theme-defaults",
+        "version": "1.55.2"
+      },
+      {
+        "name": "theme-kimbie-dark",
+        "version": "1.55.2"
+      },
+      {
+        "name": "theme-monokai",
+        "version": "1.55.2"
+      },
+      {
+        "name": "theme-monokai-dimmed",
+        "version": "1.55.2"
+      },
+      {
+        "name": "theme-quietlight",
+        "version": "1.55.2"
+      },
+      {
+        "name": "theme-red",
+        "version": "1.55.2"
+      },
+      {
+        "name": "theme-solarized-dark",
+        "version": "1.55.2"
+      },
+      {
+        "name": "theme-solarized-light",
+        "version": "1.55.2"
+      },
+      {
+        "name": "theme-tomorrow-night-blue",
+        "version": "1.55.2"
+      },
+      {
+        "name": "vscode-theme-seti",
+        "version": "1.55.2"
+      }
+    ],
+    "ms-python": [
+      {
+        "name": "python",
+        "version": "2024.10.0"
+      },
+      {
+        "name": "debugpy",
+        "version": "2024.6.0"
       }
     ],
     "ms-vscode": [
@@ -98,7 +176,19 @@
     "opensumi": [
       {
         "name": "opensumi-default-themes",
-        "version": "2.5.5"
+        "version": "2.5.8"
+      }
+    ],
+    "charliermarsh": [
+      {
+        "name": "ruff",
+        "version": "2024.40.0"
+      }
+    ],
+    "ryannz": [
+      {
+        "name": "pylez",
+        "version": "1.0.3"
       }
     ]
   }

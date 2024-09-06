@@ -15,3 +15,5 @@ export const initLibroOpensumi = (
   });
   initContainer?.register({ token: OpensumiInjector, useValue: initInjector });
 };
+
+export const ContentLoaderType = 'libro-opensumi-loader';

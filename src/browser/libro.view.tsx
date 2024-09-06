@@ -4,12 +4,13 @@ import { DocumentCommands, LibroView } from '@difizen/libro-jupyter';
 import { CommandRegistry, Container, ViewRender } from '@difizen/mana-app';
 import { Injector, INJECTOR_TOKEN } from '@opensumi/di';
 import { URI, useInjectable } from '@opensumi/ide-core-browser';
+import { ReactEditorComponent } from '@opensumi/ide-editor/lib/browser/types';
 import { ManaContainer } from '../common';
 import styles from './libro.module.less';
 import { ILibroOpensumiService } from './libro.service';
 import { LibroTracker } from './libro.view.tracker';
 
-export const OpensumiLibroView = (...params) => {
+export const OpensumiLibroView: ReactEditorComponent = (...params) => {
   const libroOpensumiService = useInjectable<ILibroOpensumiService>(
     ILibroOpensumiService,
   );

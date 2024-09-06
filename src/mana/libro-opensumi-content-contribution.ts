@@ -10,14 +10,14 @@ import { Injector } from '@opensumi/di';
 import { URI } from '@opensumi/ide-core-browser';
 import { IFileServiceClient } from '@opensumi/ide-file-service';
 import { IMessageService } from '@opensumi/ide-overlay';
-import { OpensumiInjector } from '../common';
+import { ContentLoaderType, OpensumiInjector } from '../common';
 
 @singleton({ contrib: ContentContribution })
 export class LibroOpensumiContentContribution implements ContentContribution {
   @inject(OpensumiInjector) injector: Injector;
 
   canHandle = (options) => {
-    return options.loadType === 'libro-opensumi-loader' ? 100 : 1;
+    return options.loadType === ContentLoaderType ? 100 : 1;
   };
   async loadContent(options: NotebookOption, model: LibroJupyterModel) {
     const fileServiceClient: IFileServiceClient =
@@ -54,6 +54,7 @@ export class LibroOpensumiContentContribution implements ContentContribution {
       };
       model.currentFileContents = currentFileContents;
       model.filePath = currentFileContents.path;
+      model.id = currentFileContents.path; //
       model.lastModified = model.currentFileContents.last_modified;
       if (model.executable) {
         model.startKernelConnection();
