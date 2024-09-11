@@ -189,6 +189,10 @@
       {
         "name": "pylez",
         "version": "1.0.3"
+      },
+      {
+        "name": "datavisor",
+        "version": "0.0.2"
       }
     ]
   }
