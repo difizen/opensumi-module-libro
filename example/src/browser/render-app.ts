@@ -5,7 +5,7 @@ import {
   initTocPanelColorToken,
 } from '@difizen/opensumi-module-libro';
 import { Injector } from '@opensumi/di';
-import { IClientAppOpts, path } from '@opensumi/ide-core-browser';
+import { IClientAppOpts } from '@opensumi/ide-core-browser';
 import { ClientApp } from '@opensumi/ide-core-browser/lib/bootstrap/app';
 import { manaContainer } from './mana-application';
 import { StatusBarContribution } from './status-bar/status-bar.contribution';
@@ -22,20 +22,14 @@ export async function renderApp(opts: IClientAppOpts) {
   initLibroOpensumi(injector, manaContainer);
   injector.addProviders(StatusBarContribution);
   const hostname = window.location.hostname;
-  // const query = new URLSearchParams(window.location.search);
+  const query = new URLSearchParams(window.location.search);
   // 线上的静态服务和 IDE 后端是一个 Server
   const serverPort = isDev ? 8000 : window.location.port;
   const staticServerPort = isDev ? 8080 : window.location.port;
-  opts.workspaceDir = '/Users/ryannz/projj/github.com/difizen/libro';
-  // opts.workspaceDir || query.get('workspaceDir') || process.env.WORKSPACE_DIR;
 
-  opts.extensionDir =
-    opts.extensionDir ||
-    process.env.EXTENSION_DIR ||
-    path.join(
-      __dirname,
-      '/Users/ryannz/projj/github.com/difizen/opensumi-module-libro/extensions',
-    );
+  opts.workspaceDir = query.get('workspaceDir') || process.env.WORKSPACE_DIR;
+
+  opts.extensionDir = opts.extensionDir || process.env.EXTENSION_DIR;
   opts.injector = injector;
   opts.wsPath = process.env.WS_PATH || `ws://${hostname}:${serverPort}`;
   opts.extWorkerHost =
