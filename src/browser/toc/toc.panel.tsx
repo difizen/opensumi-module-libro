@@ -43,8 +43,8 @@ export const TocPanel = ({
             });
         });
     }
-    editorService.onActiveResourceChange((e: any) => {
-      if ((e.uri as URI).path.ext === `.${LIBRO_COMPONENTS_SCHEME_ID}`) {
+    editorService.onActiveResourceChange((e) => {
+      if (e?.uri.path.ext === `.${LIBRO_COMPONENTS_SCHEME_ID}`) {
         libroOpensumiService.getOrCreatLibroView(e.uri).then((libro) => {
           const viewManager = manaContainer.get(ViewManager);
           viewManager

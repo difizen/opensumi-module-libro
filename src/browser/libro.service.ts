@@ -7,7 +7,7 @@ import {
 } from '@difizen/libro-jupyter';
 import { Container, getOrigin, URI as ManaURI } from '@difizen/mana-app';
 import { Autowired, Injectable } from '@opensumi/di';
-import { URI, WithEventBus } from '@opensumi/ide-core-browser';
+import { path, URI, WithEventBus } from '@opensumi/ide-core-browser';
 import {
   ResourceDecorationNeedChangeEvent,
   WorkbenchEditorService,
@@ -45,14 +45,18 @@ export class LibroOpensumiService
     makeObservable(this);
   }
 
+  get libroService() {
+    const libroService = this.manaContainer.get(LibroService);
+    return libroService;
+  }
+
   getOrCreatLibroView = async (uri: URI) => {
     const libroOption = {
       modelId: uri.toString(),
       resource: uri.toString(),
       loadType: ContentLoaderType,
     };
-    const libroService = this.manaContainer.get(LibroService);
-    const libroView = await libroService.getOrCreateView(libroOption);
+    const libroView = await this.libroService.getOrCreateView(libroOption);
     return libroView;
   };
 
@@ -64,9 +68,16 @@ export class LibroOpensumiService
       return;
     }
     const { notebookId, cellId } = parsed;
-    const notebookUri = URI.file(notebookId);
-    const libroView = await this.getOrCreatLibroView(notebookUri);
-    const cell = libroView.model.cells.find((cell) => cell.model.id === cellId);
+    // const notebookUri = URI.file(notebookId);
+    /**
+     * 这里需要兼容各种不同的 content contribution 加载数据的方式，采取匹配model id的方式来找到libroview， 因为model id是会被编码进uri的
+     */
+    const libroView = Array.from(
+      this.libroService.getViewCache().values(),
+    ).find((item) => path.join('/', String(item.model.id)) === notebookId);
+    const cell = libroView?.model.cells.find(
+      (cell) => cell.model.id === cellId,
+    );
     return cell;
   };
 
