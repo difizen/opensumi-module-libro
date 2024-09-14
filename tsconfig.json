@@ -28,5 +28,6 @@
     "lib": ["dom", "esnext", "webworker"],
     "typeRoots": ["typings"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["extensions/**/*"]
 }

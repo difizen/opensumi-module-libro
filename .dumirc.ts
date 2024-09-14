@@ -21,4 +21,8 @@ export default defineConfig({
     'babel-plugin-parameter-decorator',
   ],
   mfsu: false,
+  define: {
+    'process.env.WORKSPACE_DIR': path.join(process.cwd(), 'example'),
+    'process.env.EXTENSION_DIR': path.join(process.cwd(), 'extensions'),
+  },
 });

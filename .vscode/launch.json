@@ -12,7 +12,7 @@
       "port": 9889, // 插件进程端口，不可修改
       "skipFiles": ["<node_internals>/**"],
       "sourceMaps": true, // 开启 SourceMap，便于源码映射
-      "outFiles": ["extensions/ryannz.pylez/dist/*/.js"] // 指定插件代码输出目录
+      "outFiles": ["extensions/ryannz.datavisor/dist/*/.js"] // 指定插件代码输出目录
     }
   ]
 }

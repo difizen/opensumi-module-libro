@@ -9,7 +9,7 @@ import { OpensumiInjector } from '../../common';
 
 import { EditorStateFactory } from '@difizen/libro-jupyter';
 import {
-  libroE2DefaultConfig,
+  libroOpensumiEditorDefaultConfig,
   LibroOpensumiEditorFactory,
   OpensumiEditorState,
   stateFactory,
@@ -24,7 +24,7 @@ export class LibroE2EditorContribution implements CodeEditorContribution {
 
   stateFactory: EditorStateFactory<OpensumiEditorState>;
 
-  defaultConfig = libroE2DefaultConfig;
+  defaultConfig = libroOpensumiEditorDefaultConfig;
 
   constructor(
     @inject(LibroOpensumiEditorFactory)
