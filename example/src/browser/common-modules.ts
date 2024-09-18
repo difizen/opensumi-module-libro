@@ -47,8 +47,6 @@ import { VariableModule } from '@opensumi/ide-variable/lib/browser';
 import { WebviewModule } from '@opensumi/ide-webview';
 import { WorkspaceEditModule } from '@opensumi/ide-workspace-edit/lib/browser';
 import { WorkspaceModule } from '@opensumi/ide-workspace/lib/browser';
-import { BuitinEventsSampleModule } from '../../../modules/builtin-events/browser';
-import { CustomEditorResourceModule } from '../../../modules/custom-editor-resource/browser';
 
 export const CommonBrowserModules: ConstructorOf<BrowserModule>[] = [
   MainLayoutModule,
@@ -92,8 +90,6 @@ export const CommonBrowserModules: ConstructorOf<BrowserModule>[] = [
   TaskModule,
   TestingModule,
   ExpressFileServerModule,
-  BuitinEventsSampleModule,
-  CustomEditorResourceModule,
   OpensumiLibroModule,
   KernelPanelModule,
 ];

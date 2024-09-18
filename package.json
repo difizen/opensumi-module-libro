@@ -45,7 +45,7 @@
     "download-extension": "cross-env DEBUG=InstallExtension node scripts/download.js",
     "prepare-opensumi": "npm run compile:worker-host && npm run compile:ext-host && cross-env DEBUG=install-ext npm run download-extension",
     "clean": "git clean -fX .",
-    "start:opensumi": "run-p start:client start:server start:webview",
+    "start:opensumi": "run-p start:server start:webview",
     "rebuild": "npm rebuild"
   },
   "commitlint": {

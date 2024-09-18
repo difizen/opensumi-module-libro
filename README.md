@@ -3,15 +3,15 @@
 [![NPM version](https://img.shields.io/npm/v/@difizen/opensumi-module-libro.svg?style=flat)](https://npmjs.org/package/@difizen/opensumi-module-libro)
 [![NPM downloads](http://img.shields.io/npm/dm/@difizen/opensumi-module-libro.svg?style=flat)](https://npmjs.org/package/@difizen/opensumi-module-libro)
 
-libro on opensumi
+Use Libro as default notebook editor in Opensumi IDE
+
+![alt text](./assets/image.png)
+
+![alt text](./assets/arch.png)
 
 ## Usage
 
-TODO
-
-## Options
-
-TODO
+see [opensumi-libro-demo](./example/src/browser/render-app.ts)
 
 ## Development
 
@@ -19,20 +19,12 @@ TODO
 # install dependencies
 $ npm install
 
-# develop library by docs demo
-$ npm start
+# start server
+$ npm run start:opensumi
 
-# build library source code
-$ npm run build
+# start demo, visit http://localhost:9000
+$ npm run dev
 
-# build library source code in watch mode
-$ npm run build:watch
-
-# build docs
-$ npm run docs:build
-
-# check your project for potential problems
-$ npm run doctor
 ```
 
 ## LICENSE
