@@ -43,7 +43,7 @@ export class LibroOpensumiContentContribution implements ContentContribution {
       }
       const uri = new URI(options.resource.toString());
       const currentFileContents: IContentsModel = {
-        name: uri.path.name,
+        name: uri.path.base,
         path: uri.path.toString(),
         last_modified: stat?.lastModification.toString() || new Date().toJSON(),
         created: stat?.createTime?.toString() || new Date().toJSON(),
