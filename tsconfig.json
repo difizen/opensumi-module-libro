@@ -2,9 +2,9 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./lib",
-    "module": "commonjs",
+    "module": "ESNext",
     "target": "es2017",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "strict": true,
     "strictPropertyInitialization": false,
     "declaration": true,

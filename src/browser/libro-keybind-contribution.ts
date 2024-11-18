@@ -1,30 +1,35 @@
 import {
   LibroSearchToggleCommand,
   LibroService,
-  LibroView,
   NotebookCommands,
-} from '@difizen/libro-jupyter';
+} from '@difizen/libro-jupyter/noeditor';
 import {
   CommandRegistry as LibroCommandRegistry,
   Container,
 } from '@difizen/mana-app';
+
 import { Autowired } from '@opensumi/di';
 import {
   ClientAppContribution,
+  CommandContribution,
   CommandRegistry,
   Domain,
   IContextKeyService,
+  KeybindingContribution,
   KeybindingRegistry,
   KeybindingScope,
+  MaybePromise,
 } from '@opensumi/ide-core-browser';
 import { WorkbenchEditorService } from '@opensumi/ide-editor';
+
 import { ManaContainer } from '../common';
 import { LIBRO_COMPONENTS_SCHEME_ID } from './libro.protocol';
 
-@Domain(ClientAppContribution)
-export class LibroKeybindContribition implements ClientAppContribution {
+@Domain(ClientAppContribution, KeybindingContribution, CommandContribution)
+export class LibroKeybindContribution
+  implements ClientAppContribution, KeybindingContribution, CommandContribution
+{
   @Autowired(IContextKeyService) contextKeyService: IContextKeyService;
-  @Autowired(KeybindingRegistry) keybindingRegistry: KeybindingRegistry;
   @Autowired(WorkbenchEditorService)
   workbenchEditorService: WorkbenchEditorService;
   @Autowired(CommandRegistry)
@@ -32,16 +37,14 @@ export class LibroKeybindContribition implements ClientAppContribution {
   @Autowired(ManaContainer)
   private readonly manaContainer: Container;
 
-  onStart() {
+  initialize(): MaybePromise<void> {
     this.registerContextKey();
-    this.registerCommand();
-    this.registerKeybind();
   }
 
   registerContextKey() {
     const notebookFocusContext = this.contextKeyService.createKey<boolean>(
       'libroNotebookFocused',
-      this.hasActiveNotebook(),
+      false,
     );
 
     this.workbenchEditorService.onActiveResourceChange((e) => {
@@ -61,69 +64,53 @@ export class LibroKeybindContribition implements ClientAppContribution {
     return this.manaContainer.get(LibroCommandRegistry);
   }
 
-  hasActiveNotebook() {
-    return this.libroService.active instanceof LibroView;
-  }
-
-  registerCommand() {
-    this.commandRegistry.registerCommand(NotebookCommands['EnterCommandMode'], {
+  registerCommands(commands: CommandRegistry) {
+    commands.registerCommand(NotebookCommands['EnterCommandMode'], {
       execute: () => {
         this.libroCommandRegistry.executeCommand(
           NotebookCommands['EnterCommandMode'].id,
         );
       },
     });
-    this.commandRegistry.registerCommand(NotebookCommands['RunCell'], {
+    commands.registerCommand(NotebookCommands['RunCell'], {
       execute: () => {
         this.libroCommandRegistry.executeCommand(
           NotebookCommands['RunCell'].id,
         );
       },
     });
-    this.commandRegistry.registerCommand(
-      NotebookCommands['RunCellAndSelectNext'],
-      {
-        execute: () => {
-          this.libroCommandRegistry.executeCommand(
-            NotebookCommands['RunCellAndSelectNext'].id,
-          );
-        },
+    commands.registerCommand(NotebookCommands['RunCellAndSelectNext'], {
+      execute: () => {
+        this.libroCommandRegistry.executeCommand(
+          NotebookCommands['RunCellAndSelectNext'].id,
+        );
       },
-    );
-    this.commandRegistry.registerCommand(
-      NotebookCommands['RunCellAndInsertBelow'],
-      {
-        execute: () => {
-          this.libroCommandRegistry.executeCommand(
-            NotebookCommands['RunCellAndInsertBelow'].id,
-          );
-        },
+    });
+    commands.registerCommand(NotebookCommands['RunCellAndInsertBelow'], {
+      execute: () => {
+        this.libroCommandRegistry.executeCommand(
+          NotebookCommands['RunCellAndInsertBelow'].id,
+        );
       },
-    );
-    this.commandRegistry.registerCommand(
-      NotebookCommands['SplitCellAntCursor'],
-      {
-        execute: () => {
-          this.libroCommandRegistry.executeCommand(
-            NotebookCommands['SplitCellAntCursor'].id,
-          );
-        },
+    });
+    commands.registerCommand(NotebookCommands['SplitCellAntCursor'], {
+      execute: () => {
+        this.libroCommandRegistry.executeCommand(
+          NotebookCommands['SplitCellAntCursor'].id,
+        );
       },
-    );
-    this.commandRegistry.registerCommand(
-      LibroSearchToggleCommand.ShowLibroSearch,
-      {
-        execute: () => {
-          this.libroCommandRegistry.executeCommand(
-            LibroSearchToggleCommand.ShowLibroSearch.id,
-          );
-        },
+    });
+    commands.registerCommand(LibroSearchToggleCommand.ShowLibroSearch, {
+      execute: () => {
+        this.libroCommandRegistry.executeCommand(
+          LibroSearchToggleCommand.ShowLibroSearch.id,
+        );
       },
-    );
+    });
   }
 
-  registerKeybind() {
-    this.keybindingRegistry.registerKeybindings(
+  registerKeybindings(keybindings: KeybindingRegistry): void {
+    keybindings.registerKeybindings(
       [
         {
           keybinding: 'f1',
@@ -143,7 +130,7 @@ export class LibroKeybindContribition implements ClientAppContribution {
         {
           keybinding: 'esc',
           command: NotebookCommands['EnterCommandMode'].id,
-          when: 'libroNotebookFocused && !editorHasSelection && !editorHasSelection && !editorHasMultipleSelections',
+          when: 'libroNotebookFocused && !editorHasSelection && !editorHasMultipleSelections',
         },
         {
           keybinding: 'ctrlcmd+enter',
