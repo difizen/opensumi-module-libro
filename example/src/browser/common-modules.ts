@@ -14,7 +14,7 @@ import { DecorationModule } from '@opensumi/ide-decoration/lib/browser';
 import { EditorModule } from '@opensumi/ide-editor/lib/browser';
 import { ExplorerModule } from '@opensumi/ide-explorer/lib/browser';
 import { ExpressFileServerModule } from '@opensumi/ide-express-file-server/lib/browser';
-import { OpenVsxExtensionManagerModule } from '@opensumi/ide-extension-manager/lib/browser';
+// import { OpenVsxExtensionManagerModule } from '@opensumi/ide-extension-manager/lib/browser';
 import { ExtensionStorageModule } from '@opensumi/ide-extension-storage/lib/browser';
 import { ExtensionModule } from '@opensumi/ide-extension/lib/browser';
 import { FileSchemeModule } from '@opensumi/ide-file-scheme/lib/browser';
@@ -40,7 +40,7 @@ import { StatusBarModule } from '@opensumi/ide-status-bar/lib/browser';
 import { StorageModule } from '@opensumi/ide-storage/lib/browser';
 import { TaskModule } from '@opensumi/ide-task/lib/browser';
 import { TerminalNextModule } from '@opensumi/ide-terminal-next/lib/browser';
-import { TestingModule } from '@opensumi/ide-testing/lib/browser';
+// import { TestingModule } from '@opensumi/ide-testing/lib/browser';
 import { ThemeModule } from '@opensumi/ide-theme/lib/browser';
 import { ToolbarModule } from '@opensumi/ide-toolbar/lib/browser';
 import { VariableModule } from '@opensumi/ide-variable/lib/browser';
@@ -83,12 +83,12 @@ export const CommonBrowserModules: ConstructorOf<BrowserModule>[] = [
   KeymapsModule,
   TerminalNextModule,
   ExtensionModule,
-  OpenVsxExtensionManagerModule,
+  // OpenVsxExtensionManagerModule,
   MonacoEnhanceModule,
   ClientAddonModule,
   CommentsModule,
   TaskModule,
-  TestingModule,
+  // TestingModule,
   ExpressFileServerModule,
   OpensumiLibroModule,
   KernelPanelModule,
