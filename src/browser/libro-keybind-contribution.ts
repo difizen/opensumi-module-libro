@@ -2,7 +2,7 @@ import {
   LibroSearchToggleCommand,
   LibroService,
   NotebookCommands,
-} from '@difizen/libro-jupyter/noeditor';
+} from '@difizen/libro-jupyter';
 import {
   CommandRegistry as LibroCommandRegistry,
   Container,
@@ -130,7 +130,7 @@ export class LibroKeybindContribution
         {
           keybinding: 'esc',
           command: NotebookCommands['EnterCommandMode'].id,
-          when: 'libroNotebookFocused && !editorHasSelection && !editorHasMultipleSelections',
+          when: 'libroNotebookFocused && !editorHasSelection && !editorHasMultipleSelections && hasTextFocus',
         },
         {
           keybinding: 'ctrlcmd+enter',
