@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
-import type {
+import {
   CodeEditorFactory,
   CompletionProvider,
+  defaultConfig,
   EditorState,
   ICoordinate,
   IEditor,
@@ -11,10 +12,10 @@ import type {
   IModelContentChange,
   IPosition,
   IRange,
+  LanguageSpecRegistry,
   SearchMatch,
   TooltipProvider,
 } from '@difizen/libro-code-editor';
-import { defaultConfig } from '@difizen/libro-code-editor';
 import { MIME } from '@difizen/libro-common';
 import {
   EditorStateFactory,
@@ -46,6 +47,7 @@ import { ICodeEditor as IMonacoCodeEditor } from '@opensumi/ide-monaco/lib/brows
 import { Selection } from '@opensumi/monaco-editor-core';
 import { Range as MonacoRange } from '@opensumi/monaco-editor-core/esm/vs/editor/common/core/range';
 import type { IStandaloneEditorConstructionOptions as MonacoEditorOptions } from '@opensumi/monaco-editor-core/esm/vs/editor/standalone/browser/standaloneCodeEditor';
+import { setModelLanguage } from '@opensumi/monaco-editor-core/esm/vs/editor/standalone/browser/standaloneEditor';
 import 'resize-observer-polyfill';
 import { v4 } from 'uuid';
 import { OpensumiInjector } from '../../common';
@@ -256,6 +258,8 @@ export class LibroOpensumiEditor implements IEditor {
 
   @inject(CommandRegistry) protected readonly commandRegistry: CommandRegistry;
 
+  protected readonly languageSpecRegistry: LanguageSpecRegistry;
+
   protected defaultLineHeight = 20;
 
   protected toDispose = new DisposableCollection();
@@ -333,8 +337,11 @@ export class LibroOpensumiEditor implements IEditor {
     @inject(LibroOpensumiEditorState) state: LibroOpensumiEditorState,
     @inject(ThemeService) themeService: ThemeService,
     @inject(OpensumiInjector) injector: Injector,
+    @inject(LanguageSpecRegistry)
+    languageSpecRegistry: LanguageSpecRegistry,
   ) {
     this.themeService = themeService;
+    this.languageSpecRegistry = languageSpecRegistry;
     this.injector = injector;
     this.host = options.host;
     this.host.classList.add('libro-opensumi-editor-container');
@@ -346,7 +353,10 @@ export class LibroOpensumiEditor implements IEditor {
     const fullConfig = (this._config = {
       ...libroOpensumiEditorDefaultConfig,
       ...config,
-      mimetype: options.model.mimeType,
+      mimetype:
+        options.model.mimeType === 'application/vnd.libro.sql+json'
+          ? 'text/sql'
+          : options.model.mimeType,
     });
 
     this.completionProvider = options.completionProvider;
@@ -452,15 +462,21 @@ export class LibroOpensumiEditor implements IEditor {
     host: HTMLElement,
     config: LibroOpensumiEditorConfig,
   ) {
+    if (!this.languageSpec) {
+      return;
+    }
     const editorConfig: LibroOpensumiEditorConfig = {
       ...config,
     };
     this._config = editorConfig;
 
     let modelRef = getOrigin(this.editorState.state);
-
     const options: MonacoEditorOptions = {
       ...this.toMonacoOptions(editorConfig),
+      language:
+        this.languageSpec.language === 'sql-odps'
+          ? 'sql'
+          : this.languageSpec.language,
     };
 
     const editorCollectionService: EditorCollectionService = this.injector.get(
@@ -588,13 +604,18 @@ export class LibroOpensumiEditor implements IEditor {
    * cell 切换没走这里
    */
   protected onMimeTypeChanged(): void {
-    // const model = this.monacoEditor?.getModel();
-    // model?.setLanguage('')
-    // if (this.languageSpec && model) {
-    //   editor.setModelLanguage(model, this.languageSpec.language);
-    // }
+    const model = this.monacoEditor?.getModel();
+    model?.setLanguage('');
+    if (this.languageSpec && model) {
+      setModelLanguage(model, this.languageSpec.language);
+    }
   }
 
+  get languageSpec() {
+    return this.languageSpecRegistry.languageSpecs.find(
+      (item) => item.mime === this.model.mimeType,
+    );
+  }
   /**
    * Handles a cursor activity event.
    */

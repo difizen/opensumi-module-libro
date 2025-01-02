@@ -1,6 +1,6 @@
 {
   "name": "@difizen/opensumi-module-libro",
-  "version": "0.1.5",
+  "version": "0.1.5-alpha.1",
   "description": "libro on opensumi",
   "repository": {
     "type": "git",
@@ -85,6 +85,7 @@
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "@difizen/libro-jupyter": "^0.2.4",
+    "@difizen/libro-sql-cell": "^0.2.4",
     "@difizen/libro-toc": "^0.2.4",
     "@difizen/mana-app": "^0.1.12",
     "@opensumi/antd-theme": "^1.0.3",
