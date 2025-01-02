@@ -20,6 +20,10 @@ import {
 } from '@opensumi/ide-editor';
 import { IEditorDocumentModelService } from '@opensumi/ide-editor/lib/browser/doc-model/types';
 import { NotebookService } from '@opensumi/ide-editor/lib/browser/notebook.service';
+import {
+  ITextmateTokenizer,
+  ITextmateTokenizerService,
+} from '@opensumi/ide-monaco/lib/browser/contrib/tokenizer';
 import { ManaContainer } from '../common';
 import { LIBRO_COMPONENTS_SCHEME_ID } from './libro.protocol';
 import { ILibroOpensumiService } from './libro.service';
@@ -38,6 +42,40 @@ export class NotebookServiceOverride
   private readonly workbenchEditorService: WorkbenchEditorService;
   @Autowired(ILibroOpensumiService)
   private readonly libroOpensumiService: ILibroOpensumiService;
+  @Autowired(ITextmateTokenizer)
+  private readonly textMateService: ITextmateTokenizerService;
+
+  async initialize() {
+    // monaco.languages.register({
+    //   id,
+    //   extensions: ['.sql'],
+    //   aliases: ['sql', 'odps'],
+    //   mimetypes: ['text/sql','application/vnd.libro.sql+json'],
+    // });
+    // monaco.languages.onLanguage(id, () => {
+    //   console.log("🚀 ~ monaco.languages.onLanguage ~ id:", id)
+    //   setTokensLanguage();
+    // });
+
+    // console.log("🚀 ~ setTokensLanguage ~ conf:", conf)
+    try {
+      import(
+        /* webpackChunkName: "opensumi-textmate-languages" */ `@opensumi/textmate-languages/es/sql`
+      )
+        .then(({ default: loadLanguage }) => {
+          loadLanguage(
+            this.textMateService.registerLanguage.bind(this.textMateService),
+            this.textMateService.registerGrammar.bind(this.textMateService),
+          );
+        })
+        .catch((err) => {
+          console.log(err.message);
+          console.warn('sql', 'cannot load language');
+        });
+    } catch (err) {
+      console.warn('sql', 'cannot load language');
+    }
+  }
 
   onDidStart(): MaybePromise<void> {
     this.listenLibro();

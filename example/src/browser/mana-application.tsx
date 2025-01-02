@@ -1,4 +1,5 @@
 import { LibroJupyterNoEditorModule } from '@difizen/libro-jupyter';
+import { LibroSqlCellModule } from '@difizen/libro-sql-cell';
 import { LibroTOCModule } from '@difizen/libro-toc';
 import {
   GlobalContainer,
@@ -26,6 +27,7 @@ export function CustomToolbarLayout() {
           LibroJupyterNoEditorModule,
           DemoLibroModule,
           LibroTOCModule,
+          LibroSqlCellModule,
         ]}
         renderChildren
       />
