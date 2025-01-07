@@ -54,7 +54,10 @@ export class Keybindhandler implements ApplicationContribution {
   }
 
   hasActiveNotebook() {
-    return this.libroService.active instanceof LibroView;
+    return (
+      this.libroService.active instanceof LibroView &&
+      this.libroService.focus instanceof LibroView
+    );
   }
 
   registerCommand() {
