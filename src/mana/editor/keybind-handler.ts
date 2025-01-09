@@ -51,6 +51,14 @@ export class Keybindhandler implements ApplicationContribution {
         notebookFocusContext.set(false);
       }
     });
+
+    this.libroService.onFocusChanged((e) => {
+      if (e instanceof LibroView) {
+        notebookFocusContext.set(true);
+      } else {
+        notebookFocusContext.set(false);
+      }
+    });
   }
 
   hasActiveNotebook() {
